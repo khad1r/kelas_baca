@@ -60,7 +60,7 @@ class teacherChat extends StatelessWidget {
           // 4
           image: DecorationImage(
             // 5
-            image: AssetImage('assets/image_03.jpg'),
+            image: AssetImage('assets/images/image_03.jpg'),
             // 6
             fit: BoxFit.cover,
           ),

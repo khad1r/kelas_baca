@@ -30,11 +30,6 @@ class _TeacherAppState extends State<TeacherApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Fooderlich',
-            // 2
-            style: Theme.of(context).textTheme.headline6),
-      ),
       body: pages[_selectedIndex],
       // 4
       bottomNavigationBar: BottomNavigationBar(

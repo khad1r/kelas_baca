@@ -60,7 +60,7 @@ class teacherMore extends StatelessWidget {
           // 4
           image: DecorationImage(
             // 5
-            image: AssetImage('assets/image_02.jpg'),
+            image: AssetImage('assets/images/image_02.jpg'),
             // 6
             fit: BoxFit.cover,
           ),

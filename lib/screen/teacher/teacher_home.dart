@@ -11,7 +11,7 @@ class teacherHome extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 16, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(20, 20, 16, 0),
           child: Card(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             color: Colors.blueAccent,
@@ -22,16 +22,16 @@ class teacherHome extends StatelessWidget {
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
               child: Container(
-                width: 60,
-                height: 60,
+                width: 50,
+                height: 50,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                 ),
                 child: ProfilePicture(
-                  name: 'Aditya Dharmawan Saputra',
-                  radius: 31,
-                  fontsize: 21,
+                  name: 'Aditya Dharmawan',
+                  radius: 14,
+                  fontsize: 12,
                 ),
               ),
             ),
@@ -41,7 +41,7 @@ class teacherHome extends StatelessWidget {
           padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-            child: Text("Aditya Dharmawan Saputra",
+            child: Text("Aditya Dharmawan",
                 style: Theme.of(context).textTheme.headline2),
           ),
         ),
@@ -74,7 +74,7 @@ class teacherHome extends StatelessWidget {
                           ),
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 20, 12, 0),
+                                EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +83,7 @@ class teacherHome extends StatelessWidget {
                                 Text(
                                   'Kelas 1',
                                   textAlign: TextAlign.start,
-                                  style: Theme.of(context).textTheme.headline2,
+                                  style: Theme.of(context).textTheme.headline6,
                                 ),
                                 // Expanded(
                                 //   child: Padding(
