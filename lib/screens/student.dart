@@ -11,8 +11,10 @@ class StudentApp extends StatefulWidget {
 
 class _StudentAppState extends State<StudentApp> {
   int _selectedIndex = 0;
+
   static List<Widget> pages = <Widget>[
     StudentHome(),
+    Container(color: Colors.green),
   ];
 
   void _onItemTapped(int index) {
@@ -28,13 +30,10 @@ class _StudentAppState extends State<StudentApp> {
         title: Text(
           'Kelas Baca',
           style: Theme.of(context).textTheme.headline6,
-          textAlign: TextAlign.center,
         ),
       ),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        showUnselectedLabels: false,
-        selectedLabelStyle: Theme.of(context).textTheme.bodyText1,
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -44,7 +43,7 @@ class _StudentAppState extends State<StudentApp> {
             label: 'Home',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.more_horiz),
             label: 'More',
           ),
         ],

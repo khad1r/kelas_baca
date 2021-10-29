@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/service/Listbook.dart';
+// import 'package:kelas_baca/service/Listbook.dart';
+import '../models/models.dart';
 
-class favBook extends StatelessWidget {
+class FavoriteBooksListview extends StatelessWidget {
+  final List<Book> favoritebooks;
+  FavoriteBooksListview({Key? key, required this.favoritebooks})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     var cardAspectRatio = 4.0 / 3.0;
-    List<Widget> favList = new List();
+    List<Widget> favList = [];
 
-    for (var i = 0; i < Books.length; i++) {
+    for (var i = 0; i < favoritebooks.length; i++) {
       var favItem = Padding(
         padding: EdgeInsets.only(bottom: 20.0),
         child: ClipRRect(
@@ -20,13 +24,13 @@ class favBook extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Image.asset(Books[i].imageurl, fit: BoxFit.cover),
+                    Image.asset(favoritebooks[i].imageurl, fit: BoxFit.cover),
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 12.0),
-                          child: Text(Books[i].Title,
+                          child: Text(favoritebooks[i].title,
                               style: Theme.of(context).textTheme.headline3),
                         ))
                   ],
@@ -36,7 +40,7 @@ class favBook extends StatelessWidget {
       );
       favList.add(favItem);
     }
-    return new Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: favList,
     );

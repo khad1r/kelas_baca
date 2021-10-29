@@ -1,109 +1,123 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../components/components.dart';
 import '../models/models.dart';
 
-var cardAspectRatio = 12.0 / 16.0;
-var widgetAspectRatio = cardAspectRatio * 1.2;
-
-class CardScrollWidget extends StatefulWidget {
+class AssignBooksListView extends StatefulWidget {
   final List<Book> assignbooks;
 
-  CardScrollWidget({Key? key, required this.assignbooks}) : super(key: key);
+  AssignBooksListView({Key? key, required this.assignbooks}) : super(key: key);
 
   @override
-  _CardScrollWidgetState createState() => new _CardScrollWidgetState();
+  _AssignBooksListViewState createState() => new _AssignBooksListViewState();
 }
 
-class _CardScrollWidgetState extends State<CardScrollWidget> {
-  var currentPage = 0.0;
-  var padding = 20.0;
-  var verticalInset = 20.0;
+class _AssignBooksListViewState extends State<AssignBooksListView> {
   @override
   Widget build(BuildContext context) {
-    return new AspectRatio(
-      aspectRatio: widgetAspectRatio,
-      child: LayoutBuilder(builder: (context, contraints) {
-        var width = contraints.maxWidth;
-        var height = contraints.maxHeight;
+    final List<Book> assignbooks = widget.assignbooks;
+    var cardAspectRatio = 12.0 / 16.0;
+    var widgetAspectRatio = cardAspectRatio * 1.2;
+    dynamic currentPage = assignbooks.length - 1.0;
+    var padding = 20.0;
+    var verticalInset = 20.0;
 
-        var safeWidth = width - 2 * padding;
-        var safeHeight = height - 2 * padding;
+    PageController controller =
+        PageController(initialPage: assignbooks.length - 1);
+    controller.addListener(() {
+      setState(() {
+        currentPage = controller.page;
+      });
+    });
+    return Stack(
+      children: [
+        AspectRatio(
+            aspectRatio: widgetAspectRatio,
+            child: LayoutBuilder(builder: (context, contraints) {
+              var width = contraints.maxWidth;
+              var height = contraints.maxHeight;
 
-        var heightOfPrimaryCard = safeHeight;
-        var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
+              var safeWidth = width - 2 * padding;
+              var safeHeight = height - 2 * padding;
 
-        var primaryCardLeft = safeWidth - widthOfPrimaryCard;
-        var horizontalInset = primaryCardLeft / 2;
+              var heightOfPrimaryCard = safeHeight;
+              var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
 
-        List<Widget> cardList = new List();
+              var primaryCardLeft = safeWidth - widthOfPrimaryCard;
+              var horizontalInset = primaryCardLeft / 2.85;
+              List<Widget> cardList = [];
 
-        for (var i = 0; i < Books.length; i++) {
-          var delta = i - currentPage;
-          bool isOnRight = delta > 0;
+              for (var i = 0; i < assignbooks.length; i++) {
+                var delta = i - currentPage;
+                bool isOnRight = delta > 0;
 
-          var start = padding +
-              max(
-                  primaryCardLeft -
-                      horizontalInset * -delta * (isOnRight ? 15 : 1),
-                  0.0);
+                var start = padding +
+                    max(
+                        primaryCardLeft -
+                            horizontalInset * -delta * (isOnRight ? 15 : 1),
+                        1.0);
 
-          var cardItem = Positioned.directional(
-            top: padding + verticalInset * max(-delta, 0.0),
-            bottom: padding + verticalInset * max(-delta, 0.0),
-            start: start,
-            textDirection: TextDirection.rtl,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(3.0, 6.0),
-                      blurRadius: 10.0)
-                ]),
-                child: AspectRatio(
-                  aspectRatio: cardAspectRatio,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(Books[i].imageurl, fit: BoxFit.cover),
-                      Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8.0),
-                            child: Text(Books[i].Title,
-                                style: Theme.of(context).textTheme.headline2),
-                          ))
-                    ],
+                var cardItem = Positioned.directional(
+                  top: padding + verticalInset * max(-delta, -0.75),
+                  bottom: padding + verticalInset * max(-delta, -0.75),
+                  start: start,
+                  textDirection: TextDirection.rtl,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(3.0, 6.0),
+                                blurRadius: 10.0)
+                          ]),
+                      child: AspectRatio(
+                        aspectRatio: cardAspectRatio,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            Image.asset(assignbooks[i].imageurl,
+                                fit: BoxFit.cover),
+                            Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8.0),
+                                  child: Text(assignbooks[i].title,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline2),
+                                ))
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          );
-          cardList.add(cardItem);
-        }
-        return Stack(
-          children: cardList,
-        );
-      }),
+                );
+                cardList.add(cardItem);
+              }
+              return Stack(
+                children: cardList,
+              );
+            })),
+        Positioned.fill(
+          child: PageView.builder(
+            itemCount: assignbooks.length,
+            controller: controller,
+            reverse: true,
+            itemBuilder: (context, index) {
+              return InkWell(
+                  onTap: () {
+                    var snackBar = SnackBar(
+                        content: Text('Read ${assignbooks[index].title}'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
+                  child: Container());
+            },
+          ),
+        )
+      ],
     );
   }
-}
-
-List<Widget> cardList(currentPage, controller) {
-  return <Widget>[
-    CardScrollWidget(currentPage),
-    Positioned.fill(
-      child: PageView.builder(
-        itemCount: Books.length,
-        controller: controller,
-        reverse: true,
-        itemBuilder: (context, index) {
-          return Container();
-        },
-      ),
-    )
-  ];
 }

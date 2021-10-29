@@ -1,8 +1,8 @@
 import './book.dart';
 
 class StudentHomeData {
-  final List<Book> assignbooks;
-  final List<Book> favoritebooks;
+  final List<Book> assignBooks;
+  final List<Book> favoriteBooks;
 
-  StudentHomeData(this.assignbooks, this.favoritebooks);
+  StudentHomeData(this.assignBooks, this.favoriteBooks);
 }

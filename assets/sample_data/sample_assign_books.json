@@ -3,30 +3,30 @@
         {
             "id": "1",
             "title": "Hounted Ground",
-            "imageurl": "assets/images/image_04.jpg",
+            "imageurl": "assets/books_cover/image_04.jpg",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "pdfurl":"assets/pdf/deutch.pdf"
+            "pdfurl":"assets/books_pdf/deutch.pdf"
         },
         {
             "id": "2",
             "title": "Fallen In Love",
-            "imageurl": "assets/images/image_03.jpg",
+            "imageurl": "assets/books_cover/image_03.jpg",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "pdfurl":"assets/pdf/portegese.pdf"
+            "pdfurl":"assets/books_pdf/portegese.pdf"
         },
         {
             "id": "3",
             "title": "The Dreaming Moon",
-            "imageurl": "assets/images/image_02.jpg",
+            "imageurl": "assets/books_cover/image_02.jpg",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "pdfurl":"assets/pdf/english.pdf"
+            "pdfurl":"assets/books_pdf/english.pdf"
         },
         {
             "id": "4",
             "title": "Jack the Persian and the Black Castel",
-            "imageurl": "assets/images/image_01.png",
+            "imageurl": "assets/books_cover/image_01.png",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            "pdfurl":"assets/pdf/indo.pdf"
+            "pdfurl":"assets/books_pdf/indo.pdf"
         }
     ]
 }

@@ -32,7 +32,8 @@ class StudentHome extends StatelessWidget {
                   ],
                 ),
               ),
-              // Stack(children: cardList(currentPage, controller)),
+              AssignBooksListView(
+                  assignbooks: snapshot.data?.assignBooks ?? []),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 12.0, right: 12.0, top: 2.0, bottom: 20.0),
@@ -44,11 +45,8 @@ class StudentHome extends StatelessWidget {
                   ],
                 ),
               ),
-              // favBook(),
-              // TodayRecipeListView(recipes: snapshot.data?.assignbooks ?? []),
-              // const SizedBox(height: 16),
-              // FriendPostListView(
-              //     friendPosts: snapshot.data?.favoritebooks ?? []),
+              FavoriteBooksListview(
+                  favoritebooks: snapshot.data?.favoriteBooks ?? [])
             ],
           );
         } else {

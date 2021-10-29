@@ -41,12 +41,12 @@ class MockStudentService {
     final Map<String, dynamic> json = jsonDecode(dataString);
 
     // Go through each recipe and convert json to ExploreRecipe object.
-    if (json['favoritebooks'] != null) {
-      final favoritebooks = <Book>[];
-      json['favoritebooks'].forEach((v) {
-        favoritebooks.add(Book.fromJson(v));
+    if (json['favoriteBooks'] != null) {
+      final favoriteBooks = <Book>[];
+      json['favoriteBooks'].forEach((v) {
+        favoriteBooks.add(Book.fromJson(v));
       });
-      return favoritebooks;
+      return favoriteBooks;
     } else {
       return [];
     }
