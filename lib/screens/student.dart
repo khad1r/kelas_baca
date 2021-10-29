@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import './student_home.dart';
+import 'student_home_screen.dart';
 
 // 1
 class StudentApp extends StatefulWidget {
+  const StudentApp({Key? key}) : super(key: key);
+
   @override
   _StudentAppState createState() => _StudentAppState();
 }
 
 class _StudentAppState extends State<StudentApp> {
-  // 7
   int _selectedIndex = 0;
-
-  // 8
   static List<Widget> pages = <Widget>[
     StudentHome(),
   ];
 
-  // 9
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -26,25 +24,27 @@ class _StudentAppState extends State<StudentApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Kelas Baca',
+          style: Theme.of(context).textTheme.headline6,
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: pages[_selectedIndex],
-      // 4
       bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: false,
         selectedLabelStyle: Theme.of(context).textTheme.bodyText1,
-        unselectedLabelStyle: Theme.of(context).textTheme.bodyText1,
-        // 5
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        // 10
         currentIndex: _selectedIndex,
-        // 11
         onTap: _onItemTapped,
-        // 6
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
             label: 'Home',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
+            icon: Icon(Icons.favorite),
             label: 'More',
           ),
         ],

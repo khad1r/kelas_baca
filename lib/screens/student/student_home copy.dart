@@ -4,6 +4,8 @@ import 'package:kelas_baca/widget/cards.dart';
 import 'package:kelas_baca/widget/favorite.dart';
 
 class StudentHome extends StatefulWidget {
+  StudentHome({Key? key}) : super(key: key);
+
   @override
   _StudentHomeState createState() => new _StudentHomeState();
 }

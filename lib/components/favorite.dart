@@ -20,7 +20,7 @@ class favBook extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Image.asset(Books[i].imageUrl, fit: BoxFit.cover),
+                    Image.asset(Books[i].imageurl, fit: BoxFit.cover),
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(
