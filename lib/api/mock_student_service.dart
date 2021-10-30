@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import '../models/models.dart';
 
 class MockStudentService {
-  Future<StudentHomeData> getStudentHomeData() async {
-    final assignbooks = await _getAssignBooks();
-    final favoritebooks = await _getFavoriteBooks();
+  // Future<StudentHomeData> getStudentHomeData() async {
+  //   final assignbooks = await getAssignBooks();
+  //   final favoritebooks = await getFavoriteBooks();
 
-    return StudentHomeData(assignbooks, favoritebooks);
-  }
+  //   return StudentHomeData(assignbooks, favoritebooks);
+  // }
 
-  Future<List<Book>> _getAssignBooks() async {
+  Future<List<Book>> getAssignBooks() async {
     // Simulate api request wait time
     await Future.delayed(const Duration(milliseconds: 1000));
     // Load json from file system
@@ -31,7 +31,7 @@ class MockStudentService {
     }
   }
 
-  Future<List<Book>> _getFavoriteBooks() async {
+  Future<List<Book>> getFavoriteBooks() async {
     // Simulate api request wait time
     await Future.delayed(const Duration(milliseconds: 1000));
     // Load json from file system
