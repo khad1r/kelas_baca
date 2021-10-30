@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
+import '../screens/book_detail.dart';
 import 'dart:math';
 
 var cardAspectRatio = 12.0 / 16.0;
@@ -81,6 +82,12 @@ class _AssignBooksListViewState extends State<AssignBooksListView> {
                         width: 50,
                         decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.05),
+                            image: DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: Image.asset(
+                                'assets/images/no_assign.png',
+                              ).image,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.black12,
@@ -162,10 +169,14 @@ class _AssignBooksListViewState extends State<AssignBooksListView> {
                 return Container();
               }
               return InkWell(
-                  onTap: () {
-                    var snackBar = SnackBar(
-                        content: Text('Read ${assignbooks[index].title}'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BookDetail(book: widget.assignbooks[index]),
+                      ),
+                    );
                   },
                   child: Container());
             },

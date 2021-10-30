@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../components/components.dart';
-import '../models/models.dart';
-import '../api/mock_student_service.dart';
+import 'package:kelas_baca/components/components.dart';
+import 'package:kelas_baca/models/models.dart';
+import 'package:kelas_baca/api/mock_student_service.dart';
 // import 'package:kelas_baca/widget/cards.dart';
 // import 'package:kelas_baca/widget/favorite.dart';
 
@@ -9,8 +9,6 @@ class StudentHome extends StatelessWidget {
   final mockService = MockStudentService();
 
   StudentHome({Key? key}) : super(key: key);
-
-  // var currentPage = images.length - 1.0;
 
   @override
   Widget build(BuildContext context) {

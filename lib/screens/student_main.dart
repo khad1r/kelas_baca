@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'student_home_screen.dart';
+import 'student_screens/student_screens.dart';
 
 // 1
 class StudentApp extends StatefulWidget {
@@ -14,7 +14,7 @@ class _StudentAppState extends State<StudentApp> {
 
   static List<Widget> pages = <Widget>[
     StudentHome(),
-    Container(color: Colors.green),
+    StudentMore(),
   ];
 
   void _onItemTapped(int index) {
@@ -27,9 +27,10 @@ class _StudentAppState extends State<StudentApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Kelas Baca',
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
       body: pages[_selectedIndex],

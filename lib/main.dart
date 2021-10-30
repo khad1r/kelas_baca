@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:kelas_baca/screen/Login.dart';
-import 'theme.dart';
-import 'package:kelas_baca/screens/student.dart';
+import './screens/splash_screen.dart';
+import './theme.dart';
 
 void main() {
   runApp(const KelasBaca());
@@ -15,7 +14,7 @@ class KelasBaca extends StatelessWidget {
     return MaterialApp(
       theme: theme,
       title: 'Kelas Baca',
-      home: const StudentApp(),
+      home: SplashScreen(),
     );
   }
 }

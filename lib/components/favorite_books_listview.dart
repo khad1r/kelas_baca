@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:kelas_baca/service/Listbook.dart';
+import '../screens/book_detail.dart';
 import '../models/models.dart';
 
 class FavoriteBooksListview extends StatelessWidget {
@@ -21,6 +22,12 @@ class FavoriteBooksListview extends StatelessWidget {
               width: 320,
               decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.05),
+                  image: DecorationImage(
+                    fit: BoxFit.fitWidth,
+                    image: Image.asset(
+                      'assets/images/no_favorite.png',
+                    ).image,
+                  ),
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black12,
@@ -42,10 +49,14 @@ class FavoriteBooksListview extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: InkWell(
-                  onTap: () {
-                    var snackBar = SnackBar(
-                        content: Text('Read ${favoritebooks[i].title}'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BookDetail(book: favoritebooks[i]),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 240,
