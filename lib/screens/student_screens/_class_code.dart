@@ -76,6 +76,10 @@ class _StudentClassCodeState extends State<StudentClassCode> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.blueAccent,
+                                ),
                                 fillColor: Colors.blueAccent.withOpacity(0.5)),
                             style: Theme.of(context).textTheme.bodyText1,
                             keyboardType: TextInputType.emailAddress,

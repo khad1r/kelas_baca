@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/screens/student_screens/student_screens.dart';
+import './login_screen.dart';
 // import 'package:kelas_baca/screen/teacher/teacher.dart';
 // import 'package:flutter_education_ui/screen/signup_screen.dart';
 
@@ -74,11 +75,11 @@ class _SplashScreenState extends State<SplashScreen> {
                                     horizontal: 75, vertical: 10),
                               ),
                               onPressed: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     // builder: (context) => TeacherApp(),
-                                //   ),
-                                // );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => Login(),
+                                  ),
+                                );
                               },
                               child: Text('Teacher',
                                   style: Theme.of(context).textTheme.bodyText1),
