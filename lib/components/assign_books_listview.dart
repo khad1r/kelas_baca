@@ -164,6 +164,7 @@ class _AssignBooksListViewState extends State<AssignBooksListView> {
             itemCount: assignbooks.length,
             controller: controller,
             reverse: true,
+            physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               if (widget.assignbooks == [] || widget.assignbooks.length == 0) {
                 return Container();

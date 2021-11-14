@@ -25,24 +25,26 @@ class _SignUpState extends State<SignUp> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  // decoration: BoxDecoration(
-                  //   color: Colors.white,
-                  // ),
-                  child: Center(
-                    child: Text("Kelas Baca",
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              // ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Kelas Baca",
                         style: TextStyle(
                             color: Colors.blueAccent,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                             fontSize: 50)),
-                  ))
-            ],
-          ),
+                    Text("Teacher",
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20)),
+                  ])),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
@@ -81,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                               filled: true,
                               fillColor: Colors.blueAccent.withOpacity(0.5),
                               prefixIcon: Icon(
-                                Icons.email_outlined,
+                                Icons.person_outline_rounded,
                                 color: Colors.blueAccent,
                               ),
                             ),
@@ -150,6 +152,10 @@ class _SignUpState extends State<SignUp> {
                               ),
                               filled: true,
                               fillColor: Colors.blueAccent.withOpacity(0.5),
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: Colors.blueAccent,
+                              ),
                               suffixIcon: InkWell(
                                 onTap: () => setState(
                                   () => passwordVisibility1 =
@@ -193,6 +199,10 @@ class _SignUpState extends State<SignUp> {
                               ),
                               filled: true,
                               fillColor: Colors.blueAccent.withOpacity(0.5),
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: Colors.blueAccent,
+                              ),
                               suffixIcon: InkWell(
                                 onTap: () => setState(
                                   () => passwordVisibility2 =

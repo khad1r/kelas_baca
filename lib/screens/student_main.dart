@@ -1,54 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../components/components.dart';
 import 'student_screens/student_screens.dart';
 
 // 1
-class StudentApp extends StatefulWidget {
-  const StudentApp({Key? key}) : super(key: key);
+class StudentApp extends StatelessWidget {
+  StudentApp({Key? key}) : super(key: key);
 
-  @override
-  _StudentAppState createState() => _StudentAppState();
-}
-
-class _StudentAppState extends State<StudentApp> {
-  int _selectedIndex = 0;
-
-  static List<Widget> pages = <Widget>[
-    StudentHome(),
-    StudentMore(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  String name = "Putra Siyang";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.blueAccent,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.blueAccent,
+          statusBarColor: Colors.blueAccent,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarDividerColor: Colors.blueAccent,
+          //Navigation bar divider color
+          systemNavigationBarIconBrightness:
+              Brightness.dark, //navigation bar icon
+        ),
         title: Text(
           'Kelas Baca',
           style: Theme.of(context).textTheme.headline1,
         ),
-      ),
-      body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
-            label: 'Home',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
-          ),
+        actions: [
+          profileButton(context),
         ],
       ),
+      body: StudentHome(),
+    );
+  }
+
+  Widget profileButton(context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: GestureDetector(
+          child: ProfilePicture(
+            name: name,
+          ),
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudentMore(),
+              ),
+            );
+          }),
     );
   }
 }

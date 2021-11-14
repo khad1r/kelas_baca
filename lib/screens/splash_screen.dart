@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/screens/student_screens/student_screens.dart';
 import './login_screen.dart';
+import 'student_screens/_student_login.dart';
 // import 'package:kelas_baca/screen/teacher/teacher.dart';
 // import 'package:flutter_education_ui/screen/signup_screen.dart';
 
@@ -98,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => StudentClassCode(),
+                                    builder: (context) => StudentLogin(),
                                   ),
                                 );
                               },

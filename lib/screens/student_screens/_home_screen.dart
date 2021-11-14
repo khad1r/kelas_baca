@@ -14,6 +14,7 @@ class StudentHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(

@@ -93,8 +93,9 @@ class ThemeApp {
         backgroundColor: Colors.blueAccent,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.blueAccent,
-      ),
+          backgroundColor: Colors.blueAccent,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white38),
       textTheme: darkTextTheme,
     );
   }

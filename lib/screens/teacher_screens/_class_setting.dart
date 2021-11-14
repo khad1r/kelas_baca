@@ -13,6 +13,7 @@ class _ClassSettingState extends State<ClassSetting> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
       ),

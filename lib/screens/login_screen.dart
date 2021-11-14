@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import './teacher_main.dart';
 import './signup_scereen.dart';
 
@@ -23,24 +24,26 @@ class _LoginState extends State<Login> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  // decoration: BoxDecoration(
-                  //   color: Colors.white,
-                  // ),
-                  child: Center(
-                    child: Text("Kelas Baca",
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              // ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Kelas Baca",
                         style: TextStyle(
                             color: Colors.blueAccent,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                             fontSize: 50)),
-                  ))
-            ],
-          ),
+                    Text("Teacher",
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20)),
+                  ])),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
@@ -172,7 +175,7 @@ class _LoginState extends State<Login> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 6),
+                                      0, 0, 6, 0),
                                   child: Text('Belum punya akun?',
                                       style: Theme.of(context)
                                           .textTheme
@@ -187,11 +190,12 @@ class _LoginState extends State<Login> {
                                         ),
                                       );
                                     },
-                                    child: Text(
-                                      'Daftar',
-                                      style:
-                                          TextStyle(color: Colors.blueAccent),
-                                    ))
+                                    child: Text('Daftar',
+                                        style: GoogleFonts.openSans(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.blueAccent,
+                                        )))
                               ],
                             ),
                           )

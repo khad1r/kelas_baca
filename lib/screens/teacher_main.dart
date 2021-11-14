@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kelas_baca/components/profile_pic.dart';
 import './teacher_screens/teacher_screens.dart';
+import 'teacher_screens/teacher_chat.dart';
 
 // 1
 class TeacherApp extends StatefulWidget {
@@ -14,7 +17,7 @@ class _TeacherAppState extends State<TeacherApp> {
   // 8
   static List<Widget> pages = <Widget>[
     teacherHome(),
-    teacherMore(),
+    teacherChat(),
   ];
 
   // 9
@@ -28,21 +31,32 @@ class _TeacherAppState extends State<TeacherApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: Colors.blueAccent,
-        automaticallyImplyLeading: false,
+        toolbarHeight: 75,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.blueAccent,
+          statusBarColor: Colors.blueAccent,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarDividerColor: Colors.blueAccent,
+          //Navigation bar divider color
+          systemNavigationBarIconBrightness:
+              Brightness.dark, //navigation bar icon
+        ),
         title: Text(
           'Kelas Baca',
           style: Theme.of(context).textTheme.headline1,
         ),
-        actions: [],
-        centerTitle: false,
-        elevation: 0,
+        actions: [
+          profileButton(context),
+        ],
       ),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: Theme.of(context).textTheme.bodyText1,
         unselectedLabelStyle: Theme.of(context).textTheme.bodyText1,
-        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
@@ -51,11 +65,29 @@ class _TeacherAppState extends State<TeacherApp> {
             label: 'Home',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
+            icon: Icon(Icons.chat_rounded),
+            label: 'Chat',
           ),
         ],
       ),
+    );
+  }
+
+  Widget profileButton(context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: GestureDetector(
+          child: ProfilePicture(
+            name: "Aditya",
+          ),
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => teacherMore(),
+              ),
+            );
+          }),
     );
   }
 }

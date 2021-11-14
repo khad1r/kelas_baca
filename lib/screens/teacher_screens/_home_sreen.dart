@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
 import './teacher_screens.dart';
-// import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'class_create.dart';
+// import 'package:flutter_profile_picture/flutter_profile_picture.dart'
 
 class teacherHome extends StatelessWidget {
   teacherHome({Key? key}) : super(key: key);
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> kelas = ["Kelas 1", "Kelas 2", "Kelas 3", "Kelas 4", "Kelas 5"];
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +16,26 @@ class teacherHome extends StatelessWidget {
         backgroundColor: Colors.blue[900],
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            //TODO make Class Add Page
-
-            // await Navigator.push(
-            //   context,
-            //   PageTransition(
-            //     type: PageTransitionType.bottomToTop,
-            //     duration: Duration(milliseconds: 270),
-            //     reverseDuration: Duration(milliseconds: 270),
-            //     child: CreateTaskPageWidget(),
-            //   ),
-            // );
+            //             // 1
+//             final manager = Provider.of<GroceryManager>(context, listen: false);
+// // 2
+            Navigator.push(
+              context,
+              // 3
+              MaterialPageRoute(
+                // 4
+                builder: (context) => ClassCreate(
+                  // 5
+                  // onCreate: (item) {
+                  onCreate: () {
+                    // // 6
+                    // manager.addItem(item);
+                    // // 7
+                    // Navigator.pop(context);
+                  },
+                ),
+              ),
+            );
           },
           backgroundColor: Colors.blueAccent,
           elevation: 8,
@@ -40,17 +51,14 @@ class teacherHome extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(
-                  height: 53,
-                ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        'Manajemen Kelas',
-                        style: Theme.of(context).textTheme.headline6,
+                        'Kelas',
+                        style: Theme.of(context).textTheme.headline2,
                       )
                     ],
                   ),
@@ -58,71 +66,27 @@ class teacherHome extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    //TODO : Make ListView Builder
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ClassScreen(),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16, 25, 0, 25),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "[Nama Kelas]",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 4, 0, 0),
-                                        child: Text("kelas",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1),
-                                      )
-                                    ],
+                    child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ClassScreen(),
                                   ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 25, 12, 25),
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.grey,
-                                      size: 24,
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                                );
+                              },
+                              child: ClassCard(kelas[index]));
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 10);
+                        },
+                        itemCount: kelas.length),
                   ),
                 )
               ],
@@ -130,4 +94,48 @@ class teacherHome extends StatelessWidget {
           ),
         ));
   }
+}
+
+Widget ClassCard(String kelas) {
+  return Container(
+    padding: EdgeInsets.all(5),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(color: Colors.black26),
+      boxShadow: [
+        BoxShadow(
+            color: Colors.black12, offset: Offset(3.0, 6.0), blurRadius: 10.0)
+      ],
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 25, 0, 25),
+            child: Text(kelas,
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20)),
+          ),
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 25, 12, 25),
+              child: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey,
+                size: 24,
+              ),
+            )
+          ],
+        )
+      ],
+    ),
+  );
 }
