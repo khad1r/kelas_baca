@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
-import './screens/splash_screen.dart';
-import './theme.dart';
+import 'package:kelas_baca/api/auth_service.dart';
+import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/wrapper.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const KelasBaca());
 }
 
-class KelasBaca extends StatelessWidget {
+class KelasBaca extends StatefulWidget {
   const KelasBaca({Key? key}) : super(key: key);
+
+  @override
+  State<KelasBaca> createState() => _KelasBacaState();
+}
+
+class _KelasBacaState extends State<KelasBaca> {
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeApp.dark();
-    return MaterialApp(
-      theme: theme,
-      title: 'Kelas Baca',
-      home: SplashScreen(),
+    return MultiProvider(
+      providers: [
+        Provider<Service>(
+          create: (context) => Service(),
+        ),
+      ],
+      child: Wrapper(),
     );
   }
 }

@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kelas_baca/components/components.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:uuid/uuid.dart';
+import 'package:nanoid/nanoid.dart';
 
+import 'package:flutter/foundation.dart';
 import '../../models/models.dart';
 
 class BookItemScreen extends StatefulWidget {
@@ -13,20 +16,23 @@ class BookItemScreen extends StatefulWidget {
   // // 2
   // final Function(GroceryItem) onUpdate;
   // // 1
-  final Function(Book) onCreate;
+  final Function(BookRaw) onCreate;
   // 2
-  final Function(Book) onUpdate;
+  final Function(BookRaw) onUpdate;
+
+  final Function? onDelete;
   // 3
   final Book? originalItem;
   // 4
   final bool isUpdating;
 
-  BookItemScreen({
-    Key? key,
-    required this.onCreate,
-    required this.onUpdate,
-    this.originalItem,
-  })  : isUpdating = (originalItem != null),
+  BookItemScreen(
+      {Key? key,
+      required this.onCreate,
+      required this.onUpdate,
+      this.originalItem,
+      this.onDelete})
+      : isUpdating = (originalItem != null),
         super(key: key);
 
   @override
@@ -40,6 +46,12 @@ class _BookItemScreenState extends State<BookItemScreen> {
   String pdfUrl = '';
   String title = '';
   String description = '';
+  bool imagePicked = false;
+  bool pdfPicked = false;
+  bool process = false;
+  File? imagefile;
+  File? pdffile;
+
   // Importance _importance = Importance.low;
   // DateTime _dueDate = DateTime.now();
   // TimeOfDay _timeOfDay = TimeOfDay.now();
@@ -112,6 +124,7 @@ class _BookItemScreenState extends State<BookItemScreen> {
       body: Container(
         padding: const EdgeInsets.all(16),
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Container(
               height: 200,
@@ -120,6 +133,25 @@ class _BookItemScreenState extends State<BookItemScreen> {
               ),
             ),
             buildDescriptionField(),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                primary: (pdffile != null || pdfUrl != '')
+                    ? Colors.blue[800]
+                    : Colors.white.withOpacity(0.2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
+              ),
+              onPressed: () async {
+                _pickpdf();
+              },
+              child: Text('Upload Buku',
+                  style: Theme.of(context).textTheme.bodyText1),
+            ),
+            SizedBox(height: 20),
             buildButton()
           ],
         ),
@@ -129,7 +161,7 @@ class _BookItemScreenState extends State<BookItemScreen> {
 
   Widget card() {
     var cardAspectRatio = 12.0 / 16.0;
-    if (imgUrl != "") {
+    if (imagefile != null || imgUrl != '') {
       return Container(
           margin: EdgeInsets.all(10.0),
           child: ClipRRect(
@@ -143,7 +175,10 @@ class _BookItemScreenState extends State<BookItemScreen> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
-                      Image.asset(imgUrl, fit: BoxFit.cover),
+                      if (imagePicked)
+                        Image.file(imagefile!, fit: BoxFit.cover)
+                      else
+                        Image.network(imgUrl, fit: BoxFit.cover)
                     ],
                   ),
                 )),
@@ -206,6 +241,7 @@ class _BookItemScreenState extends State<BookItemScreen> {
         TextField(
           controller: _discriptionController,
           keyboardType: TextInputType.multiline,
+          textAlign: TextAlign.justify,
           maxLines: null,
           decoration: InputDecoration(
             hintText: 'Deskripsi Buku',
@@ -234,10 +270,15 @@ class _BookItemScreenState extends State<BookItemScreen> {
         ),
         padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
       ),
-      onPressed: () async {
-        saving();
+      onPressed: () {
+        setState(() {
+          process = true;
+          saving();
+        });
       },
-      child: Text('Simpan', style: Theme.of(context).textTheme.bodyText1),
+      child: process
+          ? CircularProgressIndicator()
+          : Text('Simpan', style: Theme.of(context).textTheme.bodyText1),
     );
   }
 
@@ -245,29 +286,67 @@ class _BookItemScreenState extends State<BookItemScreen> {
     if (widget.isUpdating)
       return IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () {},
+        onPressed: () async {
+          await widget.onDelete!();
+
+          Navigator.pop(context);
+        },
       );
     return IconButton(
       icon: const Icon(Icons.check),
       onPressed: () {
-        saving();
+        setState(() {
+          process = true;
+          saving();
+        });
       },
     );
   }
 
-  saving() {
-    // final book = Book();
-    // if (widget.isUpdating) {
-    //   widget.onUpdate(book);
-    // } else {
-    //   widget.onCreate(book);
-    // }
+  saving() async {
+    if (!widget.isUpdating) {
+      BookRaw book = BookRaw(
+          id: nanoid(),
+          title: title,
+          image: imagefile,
+          pdf: pdffile,
+          description: description);
+      await widget.onCreate(book);
+    } else {
+      BookRaw book = BookRaw(
+          id: widget.originalItem!.id,
+          title: title,
+          image: imagePicked ? await imagefile! : null,
+          pdf: pdfPicked ? await pdffile! : null,
+          description: description);
+      await widget.onUpdate(book);
+    }
+    Navigator.pop(context);
   }
 
   _pickImage() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null) {
+      imagefile = await File(result.files.single.path!);
+      imagePicked = true;
+      setState(() {});
+    } else {
+      return;
+    }
+  }
 
-    if (result == null) return;
+  _pickpdf() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'docx'],
+    );
+    if (result != null) {
+      pdffile = File(result.files.single.path!);
+      pdfPicked = true;
+      setState(() {});
+    } else {
+      // User canceled the picker
+    }
   }
 }

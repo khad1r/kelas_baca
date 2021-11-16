@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/components/profile_pic.dart';
+import 'package:provider/provider.dart';
+import '../theme.dart';
 import './teacher_screens/teacher_screens.dart';
 import 'teacher_screens/teacher_chat.dart';
 
-// 1
-class TeacherApp extends StatefulWidget {
-  @override
-  _TeacherAppState createState() => _TeacherAppState();
+class TeacherApp extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeApp.dark(), title: 'Teacher App', home: TeacherMain());
+  }
 }
 
-class _TeacherAppState extends State<TeacherApp> {
+class TeacherMain extends StatefulWidget {
+  @override
+  _TeacherMainState createState() => _TeacherMainState();
+}
+
+class _TeacherMainState extends State<TeacherMain> {
   // 7
   int _selectedIndex = 0;
 
@@ -50,7 +59,16 @@ class _TeacherAppState extends State<TeacherApp> {
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
-          profileButton(context),
+          IconButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => teacherMore(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.person)),
         ],
       ),
       body: pages[_selectedIndex],
@@ -70,24 +88,6 @@ class _TeacherAppState extends State<TeacherApp> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget profileButton(context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16.0),
-      child: GestureDetector(
-          child: ProfilePicture(
-            name: "Aditya",
-          ),
-          onTap: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => teacherMore(),
-              ),
-            );
-          }),
     );
   }
 }

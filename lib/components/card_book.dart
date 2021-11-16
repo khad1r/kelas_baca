@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/models/models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CardBook extends StatelessWidget {
   final double aspectRatio;
@@ -26,7 +27,10 @@ class CardBook extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Image.asset(book.imageurl, fit: BoxFit.cover),
+                    Image.network(
+                      book.imageurl,
+                      fit: BoxFit.cover,
+                    ),
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(

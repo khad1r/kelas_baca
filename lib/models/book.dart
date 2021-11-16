@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Book {
   String id;
   String title;
@@ -21,4 +23,29 @@ class Book {
       pdfurl: json['pdfurl'] ?? '',
     );
   }
+}
+
+class BookRaw {
+  String id;
+  String title;
+  File? image;
+  String description;
+  File? pdf;
+
+  BookRaw(
+      {required this.id,
+      required this.title,
+      this.image,
+      this.description = '',
+      this.pdf});
+
+  // factory BookRaw.fromJson(Map<String, dynamic> json) {
+  //   return BookRaw(
+  //     id: json['id'] ?? '',
+  //     title: json['title'] ?? '',
+  //     imageurl: json['imageurl'] ?? '',
+  //     description: json['description'] ?? '',
+  //     pdfurl: json['pdfurl'] ?? '',
+  //   );
+  // }
 }

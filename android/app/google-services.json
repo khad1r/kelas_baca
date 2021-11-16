@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40265009354",
+    "project_id": "kelas-baca",
+    "storage_bucket": "kelas-baca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40265009354:android:8455739611318bebb7cc33",
+        "android_client_info": {
+          "package_name": "com.abstrac.kelas_baca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40265009354-vl5dgppf35gv1snkvoisbip7d4krn190.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJd4lc_3MsZ9e7gjRtkxWsxdpP0shmZG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40265009354-vl5dgppf35gv1snkvoisbip7d4krn190.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

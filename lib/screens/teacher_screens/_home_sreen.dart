@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
+import 'package:kelas_baca/api/service.dart';
 import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
+import 'package:provider/provider.dart';
 import './teacher_screens.dart';
 import 'class_create.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter_profile_picture/flutter_profile_picture.dart'
 
-class teacherHome extends StatelessWidget {
+class teacherHome extends StatefulWidget {
   teacherHome({Key? key}) : super(key: key);
+
+  @override
+  State<teacherHome> createState() => _teacherHomeState();
+}
+
+class _teacherHomeState extends State<teacherHome> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String> kelas = ["Kelas 1", "Kelas 2", "Kelas 3", "Kelas 4", "Kelas 5"];
 
   @override
   Widget build(BuildContext context) {
+    final teacherService =
+        Provider.of<Service>(context, listen: false).userService;
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.blue[900],
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            //             // 1
-//             final manager = Provider.of<GroceryManager>(context, listen: false);
-// // 2
             Navigator.push(
               context,
               // 3
               MaterialPageRoute(
                 // 4
                 builder: (context) => ClassCreate(
-                  // 5
-                  // onCreate: (item) {
-                  onCreate: () {
-                    // // 6
-                    // manager.addItem(item);
-                    // // 7
-                    // Navigator.pop(context);
+                  onCreate: (className) {
+                    teacherService.createClass(className);
+                    Navigator.of(context).pop();
+                    setState(() {});
                   },
                 ),
               ),
@@ -65,29 +71,45 @@ class teacherHome extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    child: ListView.separated(
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ClassScreen(),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: teacherService.getClasses(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(child: Text('Something went wrong'));
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.active) {
+                            return ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                Map<String, dynamic> data =
+                                    document.data()! as Map<String, dynamic>;
+                                return InkWell(
+                                  onTap: () {
+                                    teacherService.setClass(document.id);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ClassScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: ClassCard(data["name"]),
                                   ),
                                 );
-                              },
-                              child: ClassCard(kelas[index]));
+                              }).toList(),
+                            );
+                          }
+                          return Center(child: CircularProgressIndicator());
                         },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(height: 10);
-                        },
-                        itemCount: kelas.length),
-                  ),
+                      )),
                 )
               ],
             ),

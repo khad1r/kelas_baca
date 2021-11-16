@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kelas_baca/api/service.dart';
+import 'package:provider/provider.dart';
 import './teacher_main.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  final String signUpType;
+  const SignUp({Key? key, required this.signUpType}) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -15,19 +19,28 @@ class _SignUpState extends State<SignUp> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
   bool passwordVisibility1 = false;
+  String? _message;
+  bool _loading = false;
+  var authservice;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    authservice = Provider.of<Service>(context).auth;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.blue[900], //or set color with: Color(0xFF0000FF)
+    ));
+
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.blueGrey[800],
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
+      backgroundColor: Colors.blue[900],
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Container(
               width: MediaQuery.of(context).size.width,
-              height: 300,
+              height: 200,
               // decoration: BoxDecoration(
               //   color: Colors.white,
               // ),
@@ -36,28 +49,37 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Text("Kelas Baca",
                         style: TextStyle(
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                             fontWeight: FontWeight.w800,
                             fontSize: 50)),
-                    Text("Teacher",
+                    Text(widget.signUpType,
                         style: TextStyle(
-                            color: Colors.blueAccent,
+                            color: Colors.white,
                             fontWeight: FontWeight.w800,
                             fontSize: 20)),
                   ])),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 36),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 36),
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          Padding(
+                            padding: EdgeInsets.all(25),
+                            child: _loading
+                                ? CircularProgressIndicator()
+                                : Text('${_message ?? ''}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                          ),
                           TextFormField(
                             controller: fullNameController,
                             obscureText: false,
@@ -88,7 +110,13 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             style: Theme.of(context).textTheme.bodyText1,
-                            keyboardType: TextInputType.emailAddress,
+                            validator: (String? value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r"^[a-z A-Z]+$").hasMatch(value)) {
+                                return 'Masukan nama yang benar!';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -124,6 +152,14 @@ class _SignUpState extends State<SignUp> {
                             ),
                             style: Theme.of(context).textTheme.bodyText1,
                             keyboardType: TextInputType.emailAddress,
+                            validator: (String? value) {
+                              if (value!.isEmpty ||
+                                  !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                      .hasMatch(value)) {
+                                return 'Masukan Email yang benar!';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -171,6 +207,16 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             style: Theme.of(context).textTheme.bodyText1,
+                            keyboardType: TextInputType.visiblePassword,
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password tidak boleh kosong!';
+                              }
+                              if (value.length < 6) {
+                                return 'Password harus lebih dari 6 karakter';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -218,6 +264,13 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             style: Theme.of(context).textTheme.bodyText1,
+                            keyboardType: TextInputType.visiblePassword,
+                            validator: (String? value) {
+                              if (passwordTextController.text != value) {
+                                return 'Password tidak sama!';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -233,41 +286,67 @@ class _SignUpState extends State<SignUp> {
                                   horizontal: 75, vertical: 20),
                             ),
                             onPressed: () async {
-                              try {
-                                if (passwordTextController.text !=
-                                    confirmPasswordTextController.text) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Passwords don't match!",
-                                      ),
-                                    ),
-                                  );
-                                  return;
-                                }
-                                await Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TeacherApp(),
-                                    ),
-                                    (r) => false);
-                              } catch (e) {
-                                print(e);
-                              }
+                              if (!_formKey.currentState!.validate()) return;
+                              setState(() {
+                                _loading = true;
+                                _signUp();
+                              });
                             },
-                            child: Text('Lanjut',
+                            child: Text('Sign',
                                 style: Theme.of(context).textTheme.bodyText1),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 6, 0),
+                                child: Text('Sudah punya akun?',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('LogIn',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1))
+                            ],
                           ),
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           )
         ],
       ),
     );
+  }
+
+  _signUp() async {
+    try {
+      _message = await authservice.signUp(
+          name: fullNameController.text,
+          email: emailTextController.text,
+          password: passwordTextController.text,
+          role: widget.signUpType);
+    } catch (e) {
+      print(e);
+      if (mounted)
+        setState(() {
+          _message = e.toString();
+          _loading = false;
+        });
+    }
   }
 }

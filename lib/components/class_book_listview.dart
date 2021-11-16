@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 
@@ -54,7 +55,7 @@ class ClassBookListView extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    Image.asset(book.imageurl, fit: BoxFit.cover),
+                    Image.network(book.imageurl, fit: BoxFit.cover),
                     Align(
                         alignment: Alignment.bottomLeft,
                         child: Padding(

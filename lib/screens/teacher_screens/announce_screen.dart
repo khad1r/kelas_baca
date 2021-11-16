@@ -4,9 +4,11 @@ import '../../models/models.dart';
 
 class AnnouceScreen extends StatefulWidget {
   // final Function(groceryItem) onCreate;
-  final Function() onSave;
+  final Function(String) onSave;
+  String annoucement;
   AnnouceScreen({
     Key? key,
+    required this.annoucement,
     required this.onSave,
   }) : super(key: key);
 
@@ -20,6 +22,8 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
 
   @override
   void initState() {
+    annoucement = widget.annoucement;
+    _TextController.text = widget.annoucement;
     _TextController.addListener(() {
       setState(() {
         annoucement = _TextController.text;
@@ -59,23 +63,7 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
           IconButton(
             icon: const Icon(Icons.check),
             onPressed: () {
-              // // 1
-              // final groceryItem = GroceryItem(
-              //   id: widget.originalItem?.id ?? const Uuid().v1(),
-              //   name: _nameController.text,
-              //   importance: _importance,
-              //   color: _currentColor,
-              //   quantity: _currentSliderValue,
-              //   date: DateTime(
-              //     _dueDate.year,
-              //     _dueDate.month,
-              //     _dueDate.day,
-              //     _timeOfDay.hour,
-              //     _timeOfDay.minute,
-              //   ),
-              // );
-
-              // widget.onCreate(groceryItem);
+              widget.onSave(annoucement);
             },
           )
         ],

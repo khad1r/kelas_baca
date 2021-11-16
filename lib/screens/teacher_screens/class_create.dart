@@ -4,7 +4,7 @@ import '../../models/models.dart';
 
 class ClassCreate extends StatefulWidget {
   // final Function(groceryItem) onCreate;
-  final Function() onCreate;
+  final Function(String) onCreate;
   ClassCreate({
     Key? key,
     required this.onCreate,
@@ -59,23 +59,7 @@ class _ClassCreateState extends State<ClassCreate> {
           IconButton(
             icon: const Icon(Icons.check),
             onPressed: () {
-              // // 1
-              // final groceryItem = GroceryItem(
-              //   id: widget.originalItem?.id ?? const Uuid().v1(),
-              //   name: _nameController.text,
-              //   importance: _importance,
-              //   color: _currentColor,
-              //   quantity: _currentSliderValue,
-              //   date: DateTime(
-              //     _dueDate.year,
-              //     _dueDate.month,
-              //     _dueDate.day,
-              //     _timeOfDay.hour,
-              //     _timeOfDay.minute,
-              //   ),
-              // );
-
-              // widget.onCreate(groceryItem);
+              widget.onCreate(_name);
             },
           )
         ],
@@ -101,23 +85,7 @@ class _ClassCreateState extends State<ClassCreate> {
                 padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
               ),
               onPressed: () async {
-                // // 1
-                // final groceryItem = GroceryItem(
-                //   id: widget.originalItem?.id ?? const Uuid().v1(),
-                //   name: _nameController.text,
-                //   importance: _importance,
-                //   color: _currentColor,
-                //   quantity: _currentSliderValue,
-                //   date: DateTime(
-                //     _dueDate.year,
-                //     _dueDate.month,
-                //     _dueDate.day,
-                //     _timeOfDay.hour,
-                //     _timeOfDay.minute,
-                //   ),
-                // );
-
-                // widget.onCreate(groceryItem);
+                widget.onCreate(_name);
               },
               child: Text('Buat', style: Theme.of(context).textTheme.bodyText1),
             ),
@@ -143,7 +111,7 @@ class _ClassCreateState extends State<ClassCreate> {
           controller: _nameController,
           decoration: InputDecoration(
             // 8
-            hintText: 'Kelas 1',
+            hintText: 'contoh: Kelas 1',
             // 9
             enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),

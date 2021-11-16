@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/screens/student_screens/student_screens.dart';
+import '../theme.dart';
 import './login_screen.dart';
 import 'student_screens/_student_login.dart';
 // import 'package:kelas_baca/screen/teacher/teacher.dart';
 // import 'package:flutter_education_ui/screen/signup_screen.dart';
 
-class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key}) : super(key: key);
-
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
+class InitialaizeApp extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: ThemeApp.dark(), title: 'Initialaize', home: SplashScreen());
+  }
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreen extends StatelessWidget {
+  SplashScreen({Key? key}) : super(key: key);
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -82,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                   ),
                                 );
                               },
-                              child: Text('Teacher',
+                              child: Text('Mulai',
                                   style: Theme.of(context).textTheme.bodyText1),
                             ),
                             ElevatedButton(
