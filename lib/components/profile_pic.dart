@@ -7,9 +7,18 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late final color;
+    try {
+      color = StringToHex.toColor(name);
+    } catch (e) {
+      color = int.parse('0xFF8687AA');
+    }
     return CircleAvatar(
-      backgroundColor: Color(StringToHex.toColor(name)),
-      child: Text(getInitials(name)),
+      backgroundColor: Color(color),
+      child: Text(
+        getInitials(name),
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 

@@ -5,16 +5,12 @@ import 'package:kelas_baca/theme.dart';
 import 'package:provider/src/provider.dart';
 
 import 'api/service.dart';
+import 'screens/Parent_main.dart';
 import 'screens/teacher_main.dart';
 
-class Wrapper extends StatefulWidget {
+class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
 
-  @override
-  State<Wrapper> createState() => _WrapperState();
-}
-
-class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final service = Provider.of<Service>(context);
@@ -35,8 +31,8 @@ class _WrapperState extends State<Wrapper> {
                 return TeacherApp();
               }
               if (service.auth.userType == "Parent") {
-                print("Parent");
-                service.auth.signOut();
+                service.parent(user.uid);
+                return ParentApp();
               }
               if (service.auth.userType == null) {
                 service.auth.signOut();

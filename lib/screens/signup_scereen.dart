@@ -112,7 +112,8 @@ class _SignUpState extends State<SignUp> {
                             style: Theme.of(context).textTheme.bodyText1,
                             validator: (String? value) {
                               if (value!.isEmpty ||
-                                  !RegExp(r"^[a-z A-Z]+$").hasMatch(value)) {
+                                  !RegExp(r"^[a-z A-Z]+$").hasMatch(value) ||
+                                  value.length < 2) {
                                 return 'Masukan nama yang benar!';
                               }
                               return null;

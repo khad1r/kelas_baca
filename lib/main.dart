@@ -27,7 +27,7 @@ class _KelasBacaState extends State<KelasBaca> {
           create: (context) => Service(),
         ),
       ],
-      child: Wrapper(),
+      child: const Wrapper(),
     );
   }
 }

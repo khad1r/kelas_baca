@@ -6,9 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:kelas_baca/models/models.dart';
 
-import 'user_service.dart';
-
-class TeacherService extends UserService {
+class TeacherService {
   final String teacherID;
 
   final CollectionReference collection;
@@ -26,10 +24,13 @@ class TeacherService extends UserService {
   }
 
   createClass(String name) {
-    collection
-        .add({'name': name, 'Annoucement': '', 'teacher': this.teacherID})
-        .then((value) => print("Class Added"))
-        .catchError((error) => print("Failed to add Class: $error"));
+    collection.add({
+      'name': name,
+      'Annoucement': '',
+      'teacher': this.teacherID
+    }).then((value) => print("Class Added"))
+        // .catchError((error) => print("Failed to add Class: $error"))
+        ;
   }
 
   Future<DocumentSnapshot> get getTeacherInfo =>
@@ -54,24 +55,22 @@ class ClassDoc {
   }
 
   deleteClass() {
-    document
-        .delete()
-        .then((value) => print("Deleted"))
-        .catchError((error) => print("Failed to delete: $error"));
+    document.delete().then((value) => print("Deleted"))
+        // .catchError((error) => print("Failed to delete: $error"))
+        ;
   }
 
   updateClassName(String name) {
-    document
-        .update({'name': name})
-        .then((value) => print("Updated"))
-        .catchError((error) => print("Failed to update: $error"));
+    document.update({'name': name}).then((value) => print("Updated"))
+        // .catchError((error) => print("Failed to update: $error"))
+        ;
   }
 
   setClassAnnouc(String annoucement) {
-    document
-        .update({'Annoucement': annoucement})
-        .then((value) => print("Updated"))
-        .catchError((error) => print("Failed to update: $error"));
+    document.update({'Annoucement': annoucement}).then(
+            (value) => print("Updated"))
+        // .catchError((error) => print("Failed to update: $error"))
+        ;
   }
 
   Stream<QuerySnapshot> getBooks() {

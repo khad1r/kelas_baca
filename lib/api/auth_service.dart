@@ -36,28 +36,13 @@ class AuthService {
     }
   }
 
-  Future<User?> _signUp(String email, String password) async {
-    try {
-      final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return credentials.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "too-many-requests") {
-        throw ("Terlalu banyak request, coba lagi beberapa saat..");
-      }
-      if (e.code == "email-already-in-use") {
-        throw ("Email telah digunakan!!");
-      } else
-        throw (e.message.toString());
-    }
-  }
-
   Future<String?> signUp(
       {required String name,
       required String email,
       required String password,
       required String role}) async {
     try {
+      userType = 'wait';
       final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirebaseFirestore.instance
