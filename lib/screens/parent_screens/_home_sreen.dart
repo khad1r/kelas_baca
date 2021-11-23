@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/api/service.dart';
 import 'package:kelas_baca/components/components.dart';
+import 'package:kelas_baca/screens/parent_screens/child_screen.dart';
 import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
 import 'package:provider/provider.dart';
 import 'parent_screens.dart';
@@ -89,14 +90,14 @@ class _ParentHomeState extends State<ParentHome> {
                                 Map<String, dynamic> data =
                                     document.data()! as Map<String, dynamic>;
                                 return InkWell(
-                                  onTap: () {
-                                    // parentService.setChild(document.id);
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => ClassScreen(),
-                                    //   ),
-                                    // );
+                                  onTap: () async {
+                                    await parentService.setChild(document.id);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChildScreen(),
+                                      ),
+                                    );
                                   },
                                   child: Padding(
                                       padding: const EdgeInsets.symmetric(

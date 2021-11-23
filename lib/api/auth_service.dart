@@ -66,5 +66,6 @@ class AuthService {
   signOut() {
     userType = null;
     _firebaseAuth.signOut();
+    _firebaseAuth.currentUser!.reload();
   }
 }

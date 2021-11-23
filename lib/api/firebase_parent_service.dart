@@ -13,6 +13,7 @@ class ParentService {
       FirebaseFirestore.instance.collection('student');
   final CollectionReference classRef =
       FirebaseFirestore.instance.collection('classes');
+  late ChildDoc childDoc;
 
   ParentService({required this.parentID});
 
@@ -40,6 +41,36 @@ class ParentService {
       FirebaseFirestore.instance.collection('user').doc(parentID).get();
 
   setChild(String documentId) {
-    // docRef = ClassDoc(classId: documentId, collection: collection);
+    childDoc = ChildDoc(id: documentId, collection: studentCollection);
+  }
+}
+
+class ChildDoc {
+  DocumentReference document;
+  ChildDoc({required String id, required CollectionReference collection})
+      : document = collection.doc(id);
+
+  Stream<DocumentSnapshot> getChild() {
+    return document.snapshots();
+  }
+
+  String getId() {
+    return document.id;
+  }
+
+  delete() {
+    document.delete().then((value) => print("Deleted"))
+        // .catchError((error) => print("Failed to delete: $error"))
+        ;
+  }
+
+  // updateName(String name) {
+  //   document.update({'name': name}).then((value) => print("Updated"))
+  //       // .catchError((error) => print("Failed to update: $error"))
+  //       ;
+  // }
+
+  Stream<QuerySnapshot> getBooks() {
+    return document.collection('book').snapshots();
   }
 }
