@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
 import './teacher_main.dart';
 
@@ -21,22 +22,24 @@ class _SignUpState extends State<SignUp> {
   bool passwordVisibility1 = false;
   String? _message;
   bool _loading = false;
-  var authservice;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    authservice = Provider.of<Service>(context).auth;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.blue[900], //or set color with: Color(0xFF0000FF)
     ));
 
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: Colors.blue[900],
-      body: ListView(
-        physics: BouncingScrollPhysics(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
               width: MediaQuery.of(context).size.width,
@@ -293,7 +296,7 @@ class _SignUpState extends State<SignUp> {
                                 _signUp();
                               });
                             },
-                            child: Text('Sign',
+                            child: Text('Daftar',
                                 style: Theme.of(context).textTheme.bodyText1),
                           ),
                           SizedBox(
@@ -336,7 +339,7 @@ class _SignUpState extends State<SignUp> {
 
   _signUp() async {
     try {
-      _message = await authservice.signUp(
+      Provider.of<AppStateManager>(context, listen: false).signUp(
           name: fullNameController.text,
           email: emailTextController.text,
           password: passwordTextController.text,

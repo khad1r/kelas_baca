@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/models/models.dart';
 import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
 import 'package:provider/provider.dart';
 import './teacher_screens.dart';
@@ -21,8 +22,10 @@ class _teacherHomeState extends State<teacherHome> {
 
   @override
   Widget build(BuildContext context) {
-    final teacherService =
-        Provider.of<Service>(context, listen: false).userService;
+    final TeacherService teacherService =
+        Provider.of<AppStateManager>(context, listen: false)
+            .service
+            .userService;
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.blue[900],

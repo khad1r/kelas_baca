@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/components/profile_pic.dart';
+import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
 import '../theme.dart';
 import './teacher_screens/teacher_screens.dart';
@@ -15,6 +16,16 @@ class TeacherApp extends StatelessWidget {
 }
 
 class TeacherMain extends StatefulWidget {
+  static MaterialPage page() {
+    return MaterialPage(
+      name: AppPages.teacherHome,
+      key: ValueKey(AppPages.teacherHome),
+      child: TeacherMain(),
+    );
+  }
+
+  TeacherMain({Key? key}) : super(key: key);
+
   @override
   _TeacherMainState createState() => _TeacherMainState();
 }
@@ -61,12 +72,8 @@ class _TeacherMainState extends State<TeacherMain> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => teacherMore(),
-                  ),
-                );
+                Provider.of<ProfileManager>(context, listen: false)
+                    .tapOnProfile(true);
               },
               icon: Icon(Icons.person)),
         ],

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/components/profile_pic.dart';
+import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
-import '../theme.dart';
-import './parent_screens/parent_screens.dart';
-
-class ParentApp extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeApp.dark(), title: 'Parent App', home: ParentMain());
-  }
-}
+import 'parent_screens.dart';
 
 class ParentMain extends StatefulWidget {
+  static MaterialPage page() {
+    return MaterialPage(
+      name: AppPages.parentHome,
+      key: ValueKey(AppPages.parentHome),
+      child: ParentMain(),
+    );
+  }
+
+  ParentMain({Key? key}) : super(key: key);
   @override
   _ParentMainState createState() => _ParentMainState();
 }
@@ -60,12 +60,8 @@ class _ParentMainState extends State<ParentMain> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ParentMore(),
-                  ),
-                );
+                Provider.of<ProfileManager>(context, listen: false)
+                    .tapOnProfile(true);
               },
               icon: Icon(Icons.person)),
         ],

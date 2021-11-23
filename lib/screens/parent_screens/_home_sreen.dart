@@ -5,7 +5,7 @@ import 'package:kelas_baca/components/components.dart';
 import 'package:kelas_baca/screens/parent_screens/child_screen.dart';
 import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
 import 'package:provider/provider.dart';
-import 'parent_screens.dart';
+import '../parent_screens.dart';
 import 'add_child.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

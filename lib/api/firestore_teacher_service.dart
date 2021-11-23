@@ -33,9 +33,6 @@ class TeacherService {
         ;
   }
 
-  Future<DocumentSnapshot> get getTeacherInfo =>
-      FirebaseFirestore.instance.collection('user').doc(teacherID).get();
-
   setClass(String documentId) {
     classDoc = ClassDoc(classId: documentId, collection: collection);
   }

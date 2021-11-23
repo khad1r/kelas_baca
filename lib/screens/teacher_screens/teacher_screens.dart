@@ -1,2 +1,2 @@
-export './_home_sreen.dart';
-export './_more_screen.dart';
+export 'teacher_Home.dart';
+export 'teacher_chat.dart';

@@ -10,19 +10,24 @@ class AuthService {
   String? userType;
 
   Stream<User?> get userChanges => _firebaseAuth.userChanges();
+  User? get getUser => _firebaseAuth.currentUser;
 
-  Future<String?> signIn(
-      {required String email, required String password}) async {
+  static Future<Map<String, dynamic>> get userData => FirebaseFirestore.instance
+      .collection('user')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .get()
+      .then((value) => value.data() as Map<String, dynamic>);
+
+  Future<String> get getRole => FirebaseFirestore.instance
+      .collection('user')
+      .doc(FirebaseAuth.instance.currentUser?.uid)
+      .get()
+      .then((value) => value.data()!['role'] as String);
+
+  Future<String?> signIn(String email, String password) async {
     try {
-      userType = 'wait';
-      final credentials = await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      final userData = await FirebaseFirestore.instance
-          .collection('user')
-          .doc(credentials.user!.uid)
-          .get();
-      userType = userData.data()!['role'];
-      _firebaseAuth.currentUser!.reload();
       return "Login berhasil";
     } on FirebaseAuthException catch (e) {
       if (e.code == "wrong-password" ||
@@ -37,20 +42,14 @@ class AuthService {
   }
 
   Future<String?> signUp(
-      {required String name,
-      required String email,
-      required String password,
-      required String role}) async {
+      String name, String email, String password, String role) async {
     try {
-      userType = 'wait';
       final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await FirebaseFirestore.instance
           .collection('user')
           .doc(credentials.user!.uid)
           .set({'name': name, 'role': role});
-      userType = role;
-      _firebaseAuth.currentUser!.reload();
       return "Sign Up berhasil";
     } on FirebaseAuthException catch (e) {
       if (e.code == "too-many-requests") {
@@ -64,8 +63,6 @@ class AuthService {
   }
 
   signOut() {
-    userType = null;
     _firebaseAuth.signOut();
-    _firebaseAuth.currentUser!.reload();
   }
 }
