@@ -14,24 +14,21 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = Provider.of<Service>(context);
+    service.initService();
     return StreamBuilder(
         stream: service.auth.userChanges,
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             final User? user = snapshot.data;
-            if (user == null) {
+            if (!service.auth.isLoggedIn() && !service.userService != null) {
               return InitialaizeApp();
             }
-            if (service.auth == null) {
-              return InitialaizeApp();
-            }
-            if (user != null) {
-              if (service.auth.userType == "Teacher") {
-                service.teacher(user.uid);
+            if (service.auth.isLoggedIn()) {
+              service.initService();
+              if (service.auth.getRole == "Teacher") {
                 return TeacherApp();
               }
-              if (service.auth.userType == "Parent") {
-                service.parent(user.uid);
+              if (service.auth.getRole == "Parent") {
                 return ParentApp();
               }
               if (service.auth.userType == null) {
