@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:kelas_baca/api/service.dart';
 
 import 'firebase_services.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String? userType;
 
@@ -15,6 +16,10 @@ class AuthService {
 
   bool isLoggedIn() {
     return _firebaseAuth.currentUser != null;
+  }
+
+  reload() {
+    if (_firebaseAuth.currentUser != null) _firebaseAuth.currentUser!.reload();
   }
 
   Future<String> get getRole => FirebaseFirestore.instance
@@ -32,13 +37,9 @@ class AuthService {
   Future<String?> signIn(
       {required String email, required String password}) async {
     try {
-      final credentials = await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      final userData = await FirebaseFirestore.instance
-          .collection('user')
-          .doc(credentials.user!.uid)
-          .get();
-      _firebaseAuth.currentUser!.reload();
+      notifyListeners();
       return "Login berhasil";
     } on FirebaseAuthException catch (e) {
       if (e.code == "wrong-password" ||
@@ -64,7 +65,7 @@ class AuthService {
           .collection('user')
           .doc(credentials.user!.uid)
           .set({'name': name, 'role': role});
-      _firebaseAuth.currentUser!.reload();
+      notifyListeners();
       return "Sign Up berhasil";
     } on FirebaseAuthException catch (e) {
       if (e.code == "too-many-requests") {
@@ -77,7 +78,8 @@ class AuthService {
     }
   }
 
-  signOut() {
-    _firebaseAuth.signOut();
+  signOut() async {
+    await _firebaseAuth.signOut();
+    notifyListeners();
   }
 }

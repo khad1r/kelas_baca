@@ -19,12 +19,14 @@ class KelasBaca extends StatefulWidget {
 }
 
 class _KelasBacaState extends State<KelasBaca> {
+  Service _service = Service();
   @override
   Widget build(BuildContext context) {
+    _service.init();
     return MultiProvider(
       providers: [
         Provider<Service>(
-          create: (context) => Service(),
+          create: (context) => _service,
         ),
       ],
       child: const Wrapper(),
