@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/api/service.dart';
 import 'package:provider/provider.dart';
 import './teacher_main.dart';
@@ -21,7 +22,7 @@ class _SignUpState extends State<SignUp> {
   bool passwordVisibility1 = false;
   String? _message;
   bool _loading = false;
-  var authservice;
+  late AuthService authservice;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 

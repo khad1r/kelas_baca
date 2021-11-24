@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/components/profile_pic.dart';
+import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
+
 import '../theme.dart';
 import './parent_screens/parent_screens.dart';
+import 'screens.dart';
 
 class ParentApp extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -14,6 +16,16 @@ class ParentApp extends StatelessWidget {
 }
 
 class ParentMain extends StatefulWidget {
+  static MaterialPage page() {
+    return MaterialPage(
+      name: AppPages.parentHome,
+      key: ValueKey(AppPages.parentHome),
+      child: ParentMain(),
+    );
+  }
+
+  ParentMain({Key? key}) : super(key: key);
+
   @override
   _ParentMainState createState() => _ParentMainState();
 }
@@ -63,7 +75,7 @@ class _ParentMainState extends State<ParentMain> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ParentMore(),
+                    builder: (context) => ProfileScreen(),
                   ),
                 );
               },

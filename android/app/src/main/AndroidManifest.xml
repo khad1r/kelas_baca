@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kelas_baca">
    <application
-        android:label="kelas_baca"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Kelas Baca"
+        android:icon="@mipmap/launcher_icon">
         android:requestLegacyExternalStorage="true"
         <activity
             android:name=".MainActivity"

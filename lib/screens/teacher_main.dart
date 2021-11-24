@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/components/profile_pic.dart';
-import 'package:provider/provider.dart';
+import 'package:kelas_baca/models/models.dart';
 import '../theme.dart';
 import './teacher_screens/teacher_screens.dart';
+import 'screens.dart';
 import 'teacher_screens/teacher_chat.dart';
 
 class TeacherApp extends StatelessWidget {
@@ -15,6 +14,14 @@ class TeacherApp extends StatelessWidget {
 }
 
 class TeacherMain extends StatefulWidget {
+  static MaterialPage page() {
+    return MaterialPage(
+      name: AppPages.teacherHome,
+      key: ValueKey(AppPages.teacherHome),
+      child: TeacherMain(),
+    );
+  }
+
   @override
   _TeacherMainState createState() => _TeacherMainState();
 }
@@ -64,7 +71,7 @@ class _TeacherMainState extends State<TeacherMain> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => teacherMore(),
+                    builder: (context) => ProfileScreen(),
                   ),
                 );
               },

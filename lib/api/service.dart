@@ -1,39 +1,55 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:kelas_baca/models/models.dart';
 
 import 'auth_service.dart';
 import 'firebase_parent_service.dart';
 import 'firestore_teacher_service.dart';
 
-class Service {
+class Service extends ChangeNotifier {
   AuthService auth = AuthService();
   var userService;
-  String? role;
-  UserApp? userData;
+  String? _role;
+  UserApp? _userData;
+  bool _isInitialized = false;
+
+  bool get isInitialized => _isInitialized;
+
+  String? get getRole => _role;
+  UserApp? get getUserData => _userData;
 
   init() async {
     auth.addListener(() {
       setService();
     });
-    setService();
+    await setService();
+    _isInitialized = true;
   }
 
   setService() async {
     if (auth.isLoggedIn()) {
-      role = await auth.getRole;
+      _role = await auth.getRole;
       var id = await auth.getUser!.uid;
-      if (role == "Teacher") {
+      if (_role == "Teacher") {
         userService = TeacherService(teacherID: id);
-      } else if (role == "Parent") {
+      } else if (_role == "Parent") {
         userService = ParentService(parentID: id);
       }
       auth.reload();
-      userData = UserApp.fromJson(await auth.userData);
+      _userData = UserApp.fromJson(await auth.userData);
     } else {
-      role = null;
+      _role = null;
       userService = null;
-      userData = null;
+      _userData = null;
+      // _isInitialized = false;
     }
+    notifyListeners();
+  }
+
+  bool didSelectUser = false;
+  void tapOnProfile(bool selected) {
+    didSelectUser = selected;
+    notifyListeners();
   }
 }
