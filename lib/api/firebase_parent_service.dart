@@ -6,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:kelas_baca/models/models.dart';
 
+import 'firebase_services.dart';
+
 class ParentService {
   final String parentID;
   late final docRef;
@@ -13,7 +15,7 @@ class ParentService {
       FirebaseFirestore.instance.collection('student');
   final CollectionReference classRef =
       FirebaseFirestore.instance.collection('classes');
-  late ChildDoc childDoc;
+  late ChildService childDoc;
 
   ParentService({required this.parentID});
 
@@ -41,36 +43,7 @@ class ParentService {
       FirebaseFirestore.instance.collection('user').doc(parentID).get();
 
   setChild(String documentId) {
-    childDoc = ChildDoc(id: documentId, collection: studentCollection);
-  }
-}
-
-class ChildDoc {
-  DocumentReference document;
-  ChildDoc({required String id, required CollectionReference collection})
-      : document = collection.doc(id);
-
-  Stream<DocumentSnapshot> getChild() {
-    return document.snapshots();
-  }
-
-  String getId() {
-    return document.id;
-  }
-
-  delete() {
-    document.delete().then((value) => print("Deleted"))
-        // .catchError((error) => print("Failed to delete: $error"))
-        ;
-  }
-
-  // updateName(String name) {
-  //   document.update({'name': name}).then((value) => print("Updated"))
-  //       // .catchError((error) => print("Failed to update: $error"))
-  //       ;
-  // }
-
-  Stream<QuerySnapshot> getBooks() {
-    return document.collection('book').snapshots();
+    childDoc = ChildService(id: documentId);
+    childDoc.init();
   }
 }

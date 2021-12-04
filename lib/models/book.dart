@@ -49,3 +49,20 @@ class BookRaw {
   //   );
   // }
 }
+
+class BookStudent {
+  String id;
+  int progress;
+
+  BookStudent({
+    required this.id,
+    this.progress = 0,
+  });
+
+  factory BookStudent.fromJson(Map<String, dynamic> json) {
+    return BookStudent(
+      id: json['id'] ?? '',
+      progress: json['progress'] ?? 0,
+    );
+  }
+}

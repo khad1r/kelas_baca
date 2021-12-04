@@ -77,6 +77,11 @@ class ClassDoc {
     return document.collection('book').snapshots();
   }
 
+  Stream<QuerySnapshot> get getStudents => FirebaseFirestore.instance
+      .collection('student')
+      .where('class', isEqualTo: document.id)
+      .snapshots();
+
   addBook(BookRaw book) async {
     CollectionReference booksCollection = document.collection('book');
     final String id = book.id;

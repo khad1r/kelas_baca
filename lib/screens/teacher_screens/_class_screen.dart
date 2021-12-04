@@ -24,23 +24,23 @@ class _ClassScreenState extends State<ClassScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var classService;
   late TextEditingController searchTextController;
-  List<mockStudent> students = [
-    mockStudent(name: "Putra Siyang"),
-    mockStudent(name: "Putri Tidur"),
-    mockStudent(name: "Ananda Sore"),
-    mockStudent(name: "Putra Siyang"),
-    mockStudent(name: "Putri Tidur"),
-    mockStudent(name: "Ananda Sore"),
-    mockStudent(name: "Putra Siyang"),
-    mockStudent(name: "Putri Tidur"),
-    mockStudent(name: "Ananda Sore"),
-    mockStudent(name: "Putra Siyang"),
-    mockStudent(name: "Putri Tidur"),
-    mockStudent(name: "Ananda Sore"),
-    mockStudent(name: "Putra Siyang"),
-    mockStudent(name: "Putri Tidur"),
-    mockStudent(name: "Abdul Kadir Jaelani"),
-  ];
+  // List<mockStudent> students = [
+  //   mockStudent(name: "Putra Siyang"),
+  //   mockStudent(name: "Putri Tidur"),
+  //   mockStudent(name: "Ananda Sore"),
+  //   mockStudent(name: "Putra Siyang"),
+  //   mockStudent(name: "Putri Tidur"),
+  //   mockStudent(name: "Ananda Sore"),
+  //   mockStudent(name: "Putra Siyang"),
+  //   mockStudent(name: "Putri Tidur"),
+  //   mockStudent(name: "Ananda Sore"),
+  //   mockStudent(name: "Putra Siyang"),
+  //   mockStudent(name: "Putri Tidur"),
+  //   mockStudent(name: "Ananda Sore"),
+  //   mockStudent(name: "Putra Siyang"),
+  //   mockStudent(name: "Putri Tidur"),
+  //   mockStudent(name: "Abdul Kadir Jaelani"),
+  // ];
 
   @override
   void initState() {
@@ -192,7 +192,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                             .textTheme
                                             .headline1,
                                       ),
-                                      _buildSearchCard(),
+                                      // _buildSearchCard(),
                                       Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               5, 15, 5, 15),
@@ -330,29 +330,42 @@ class _ClassScreenState extends State<ClassScreen> {
   }
 
   Widget _buildStudentView() {
-    return ListView.separated(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          final student = students[index];
-          return InkWell(
-            onTap: () async {
-              // await Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => StudentApp(),
-              //   ),
-              // );
+    return StreamBuilder<QuerySnapshot>(
+      stream: classService.getStudents,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        List<String> students =
+            snapshot.data!.docs.map((DocumentSnapshot document) {
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+          return data['name'] as String;
+        }).toList();
+        return ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final student = students[index];
+              return InkWell(
+                onTap: () async {
+                  // await Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => StudentApp(),
+                  //   ),
+                  // );
+                },
+                child: StudentTile(
+                  name: student,
+                ),
+              );
             },
-            child: StudentTile(
-              name: student.name,
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 13.5);
-        },
-        itemCount: students.length);
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 13.5);
+            },
+            itemCount: students.length);
+      },
+    );
   }
 }
 

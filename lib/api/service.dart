@@ -36,13 +36,14 @@ class Service extends ChangeNotifier {
       } else if (_role == "Parent") {
         userService = ParentService(parentID: id);
       }
+      _isInitialized = true;
       auth.reload();
       _userData = UserApp.fromJson(await auth.userData);
     } else {
       _role = null;
       userService = null;
       _userData = null;
-      // _isInitialized = false;
+      _isInitialized = false;
     }
     notifyListeners();
   }
