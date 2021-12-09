@@ -72,7 +72,7 @@ class FavoriteBooksListview extends StatelessWidget {
                       child: Stack(
                         fit: StackFit.expand,
                         children: <Widget>[
-                          Image.asset(favoritebooks[i].imageurl,
+                          Image.network(favoritebooks[i].imageurl,
                               fit: BoxFit.cover),
                           Align(
                               alignment: Alignment.bottomLeft,

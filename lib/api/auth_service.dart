@@ -3,15 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kelas_baca/api/service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_services.dart';
 
 class AuthService extends ChangeNotifier {
-  static authreload() {
-    if (FirebaseAuth.instance.currentUser != null)
-      FirebaseAuth.instance.currentUser!.reload();
-  }
-
   static String userId() {
     return FirebaseAuth.instance.currentUser!.uid;
   }
@@ -62,26 +58,6 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<String?> logOutStudent({required String password}) async {
-    try {
-      await _firebaseAuth.currentUser!.reauthenticateWithCredential(
-          EmailAuthProvider.credential(
-              email: _firebaseAuth.currentUser!.email!, password: password));
-      notifyListeners();
-      return "berhasil";
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "wrong-password" ||
-          e.code == "user-not-found" ||
-          e.code == "invalid-email") {
-        throw ("Password salah!!");
-      } else if (e.code == "too-many-requests") {
-        throw ("Terlalu banyak request, coba lagi beberapa saat..");
-      } else {
-        throw (e.toString());
-      }
-    }
-  }
-
   Future<String?> signUp(
       {required String name,
       required String email,
@@ -110,5 +86,38 @@ class AuthService extends ChangeNotifier {
   signOut() async {
     await _firebaseAuth.signOut();
     notifyListeners();
+  }
+
+  Future<String?> logOutStudent({required String password}) async {
+    try {
+      await _firebaseAuth.currentUser!.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: _firebaseAuth.currentUser!.email!, password: password));
+      final prefs = await SharedPreferences.getInstance();
+      prefs.remove('active_student');
+      notifyListeners();
+      return "berhasil";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "wrong-password" ||
+          e.code == "user-not-found" ||
+          e.code == "invalid-email") {
+        throw ("Password salah!!");
+      } else if (e.code == "too-many-requests") {
+        throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      } else {
+        throw (e.toString());
+      }
+    }
+  }
+
+  Future<String?> logInStudent({required String id}) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('active_student', id);
+      notifyListeners();
+      return "berhasil";
+    } on Exception catch (e) {
+      throw (e.toString());
+    }
   }
 }

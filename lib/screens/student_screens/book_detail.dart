@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/screens/student_screens/read_book.dart';
+import 'package:provider/provider.dart';
 import '../../models/models.dart';
 
 class BookDetail extends StatefulWidget {
@@ -12,6 +14,13 @@ class BookDetail extends StatefulWidget {
 
 class _BookDetailState extends State<BookDetail> {
   bool _isFavorited = false;
+  late StudentService studentService;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    studentService = Provider.of<Service>(context, listen: false).userService;
+    _isFavorited = studentService.isFavorited(widget.book.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -55,6 +64,7 @@ class _BookDetailState extends State<BookDetail> {
                       color: Colors.grey,
                       onPressed: () {
                         Navigator.of(context).pop();
+                        setState(() {});
                       },
                     ),
                     Expanded(
@@ -90,11 +100,7 @@ class _BookDetailState extends State<BookDetail> {
                           : Icons.favorite_border),
                       iconSize: 30,
                       color: Colors.red[400],
-                      onPressed: () {
-                        setState(() {
-                          _isFavorited = !_isFavorited;
-                        });
-                      },
+                      onPressed: setFavorite,
                     ),
                   ],
                 ),
@@ -110,5 +116,14 @@ class _BookDetailState extends State<BookDetail> {
             ],
           )),
     );
+  }
+
+  setFavorite() {
+    _isFavorited
+        ? studentService.removeFavorite(widget.book.id)
+        : studentService.addFavorite(widget.book.id);
+    setState(() {
+      _isFavorited = studentService.isFavorited(widget.book.id);
+    });
   }
 }

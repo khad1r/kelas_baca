@@ -15,9 +15,7 @@ class ChildService {
 
   init() async {}
 
-  String getId() {
-    return document.id;
-  }
+  String get getId => document.id;
 
   Future<String> getClassId() async {
     classId = await FirebaseFirestore.instance
@@ -95,12 +93,6 @@ class ChildService {
 
   deleteFromList(bookId) {
     document.collection('book').doc(bookId).delete();
-  }
-
-  login() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('active_student', id);
-    AuthService.authreload();
   }
 
   delete() {

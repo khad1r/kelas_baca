@@ -14,6 +14,7 @@ class StudentService {
   late DocumentReference classDoc;
   late CollectionReference bookCollection;
   late Map<String, dynamic> studentData;
+  late List _favoriteList;
   late Iterable<String> booksId;
   StudentService({
     required this.studentID,
@@ -24,6 +25,7 @@ class StudentService {
     studentData = await document
         .get()
         .then((value) => value.data() as Map<String, dynamic>);
+    _favoriteList = studentData['favorite'];
     classDoc = FirebaseFirestore.instance
         .collection('classes')
         .doc(studentData['class']);
@@ -33,17 +35,27 @@ class StudentService {
     print(booksId);
   }
 
+  List get getFavoriteList => _favoriteList;
+
+  addFavorite(String id) {
+    _favoriteList.add(id);
+    updateFavorite();
+  }
+
+  removeFavorite(String id) {
+    _favoriteList.removeWhere((element) => element == id);
+    updateFavorite();
+  }
+
+  bool isFavorited(String id) {
+    return _favoriteList.contains(id);
+  }
+
+  updateFavorite() => document.update({'favorite': _favoriteList});
+
   Future<Map<String, dynamic>> getClass() async {
     final classGet = await classDoc.get();
     return classGet.data() as Map<String, dynamic>;
-  }
-
-  logOut(message) async {
-    if (message == "berhasil") {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.remove('active_student');
-      AuthService.authreload();
-    }
   }
 
   Future<List<Book>> getBooks() async {
@@ -55,7 +67,6 @@ class StudentService {
           .get()
           .then((value) => value.data());
       Map<String, dynamic> data = book as Map<String, dynamic>;
-      print(book);
       books.add(Book(
           id: data['id'],
           title: data['title'],
@@ -79,7 +90,41 @@ class StudentService {
     //       pdfurl: data['pdf'],
     //       description: data['description']));
     // });
-    print(books);
+    return books;
+  }
+
+  Future<List<Book>> getFavoriteBooks() async {
+    List<Book> books = [];
+    for (var i = 0; i < _favoriteList.length; i++) {
+      final book = await classDoc
+          .collection('book')
+          .doc(booksId.elementAt(i))
+          .get()
+          .then((value) => value.data());
+      Map<String, dynamic> data = book as Map<String, dynamic>;
+      books.add(Book(
+          id: data['id'],
+          title: data['title'],
+          imageurl: data['image'],
+          pdfurl: data['pdf'],
+          description: data['description']));
+    }
+    // await booksId.map((id) async {
+    //   final book = await classDoc
+    //       .collection('book')
+    //       .doc(id)
+    //       .get()
+    //       .then((value) => value.data());
+    //   print(book);
+    //   Map<String, dynamic> data = book as Map<String, dynamic>;
+    //   print(book);
+    //   books.add(Book(
+    //       id: data['id'],
+    //       title: data['title'],
+    //       imageurl: data['image'],
+    //       pdfurl: data['pdf'],
+    //       description: data['description']));
+    // });
     return books;
   }
 }

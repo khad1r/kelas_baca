@@ -114,7 +114,9 @@ class _ChildSettingState extends State<ChildSetting> {
               ),
               onPressed: (childService.classId != "")
                   ? () {
-                      childService.login();
+                      Provider.of<Service>(context, listen: false)
+                          .auth
+                          .logInStudent(id: childService.getId);
                     }
                   : null,
               child: Text('Masuk Sebagai Murid',

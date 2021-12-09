@@ -105,7 +105,6 @@ class _ModalLogoutState extends State<ModalLogout> {
     try {
       _message = await service.auth
           .logOutStudent(password: passwordTextController.text);
-      studentService.logOut(_message);
     } catch (e) {
       setState(() {
         _message = e.toString();

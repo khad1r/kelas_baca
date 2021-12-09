@@ -33,7 +33,8 @@ class ParentService {
       'name': name,
       'Age': age,
       'Parent': this.parentID,
-      'class': ''
+      'class': '',
+      'favorite': [],
     }).then((value) => print("Child Added"))
         // .catchError((error) => print("Failed to add Class: $error"))
         ;
