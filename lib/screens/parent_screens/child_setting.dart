@@ -114,10 +114,7 @@ class _ChildSettingState extends State<ChildSetting> {
               ),
               onPressed: (childService.classId != "")
                   ? () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => StudentApp()),
-                      );
+                      childService.login();
                     }
                   : null,
               child: Text('Masuk Sebagai Murid',

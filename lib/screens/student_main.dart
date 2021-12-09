@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
+import 'package:kelas_baca/models/models.dart';
+import 'package:provider/provider.dart';
 import '../components/components.dart';
 import 'student_screens/student_screens.dart';
 
 // 1
-class StudentApp extends StatelessWidget {
-  StudentApp({Key? key}) : super(key: key);
+class StudentMain extends StatefulWidget {
+  static MaterialPage page() {
+    return MaterialPage(
+      name: AppPages.studentHome,
+      key: ValueKey(AppPages.studentHome),
+      child: StudentMain(),
+    );
+  }
 
-  String name = "Putra Siyang";
+  StudentMain({Key? key}) : super(key: key);
+
+  @override
+  State<StudentMain> createState() => _StudentMainState();
+}
+
+class _StudentMainState extends State<StudentMain> {
+  String name = "";
+  late StudentService studentService;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    studentService = Provider.of<Service>(context, listen: false).userService;
+    name = studentService.studentData['name'];
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelas_baca/models/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'firebase_services.dart';
 
 class ChildService {
   DocumentReference document;
@@ -94,7 +97,11 @@ class ChildService {
     document.collection('book').doc(bookId).delete();
   }
 
-  login() {}
+  login() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('active_student', id);
+    AuthService.authreload();
+  }
 
   delete() {
     document.delete().then((value) => print("Deleted"))

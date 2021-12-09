@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
+import 'package:kelas_baca/components/components.dart';
+import 'package:provider/provider.dart';
 import './student_screens.dart';
 
-class StudentMore extends StatelessWidget {
+class StudentMore extends StatefulWidget {
   StudentMore({Key? key}) : super(key: key);
+
+  @override
+  State<StudentMore> createState() => _StudentMoreState();
+}
+
+class _StudentMoreState extends State<StudentMore> {
+  late StudentService studentService;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    studentService = Provider.of<Service>(context, listen: false).userService;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,64 +57,97 @@ class StudentMore extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                      child: Text("[Student Name]",
-                          style: Theme.of(context).textTheme.headline2),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                        child: Text(studentService.studentData['name'],
+                            style: Theme.of(context).textTheme.headline2),
+                      ),
                     ),
+                    IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.blue[900],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25.0))),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: ModalLogout(),
+                                );
+                              });
+                        },
+                        icon: Icon(Icons.logout_rounded))
                   ])),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
-                    child: Text(
-                      'Informasi Kelas',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Kelas [Nama Guru]',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            '[Kelas]',
+          FutureBuilder<Map<String, dynamic>>(
+            future: studentService.getClass(),
+            builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+                          child: Text(
+                            'Informasi Kelas',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
-                        ],
-                      )),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Center(
-                          child: Text(
-                            'Pengumuman',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          '[Pengumuman]',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ))
+                        Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(16, 16, 0, 8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Kelas ${snapshot.data!['teacher_name']}',
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  snapshot.data!['name'],
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            )),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Center(
+                                child: Text(
+                                  'Pengumuman',
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                                snapshot.data!['Annoucement'],
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ));
+              } else {
+                // 10
+                return SizedBox(
+                  height: 500,
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
+            },
+          )
         ]));
   }
 }

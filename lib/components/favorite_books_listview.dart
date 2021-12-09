@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:kelas_baca/service/Listbook.dart';
-import '../screens/book_detail.dart';
+import '../screens/student_screens/book_detail.dart';
 import '../models/models.dart';
 
 class FavoriteBooksListview extends StatelessWidget {

@@ -7,6 +7,15 @@ import 'package:kelas_baca/api/service.dart';
 import 'firebase_services.dart';
 
 class AuthService extends ChangeNotifier {
+  static authreload() {
+    if (FirebaseAuth.instance.currentUser != null)
+      FirebaseAuth.instance.currentUser!.reload();
+  }
+
+  static String userId() {
+    return FirebaseAuth.instance.currentUser!.uid;
+  }
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String? userType;
 
@@ -49,6 +58,26 @@ class AuthService extends ChangeNotifier {
       }
       if (e.code == "too-many-requests") {
         throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      }
+    }
+  }
+
+  Future<String?> logOutStudent({required String password}) async {
+    try {
+      await _firebaseAuth.currentUser!.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: _firebaseAuth.currentUser!.email!, password: password));
+      notifyListeners();
+      return "berhasil";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "wrong-password" ||
+          e.code == "user-not-found" ||
+          e.code == "invalid-email") {
+        throw ("Password salah!!");
+      } else if (e.code == "too-many-requests") {
+        throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      } else {
+        throw (e.toString());
       }
     }
   }

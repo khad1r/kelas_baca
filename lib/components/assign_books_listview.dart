@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
-import '../screens/book_detail.dart';
+import '../screens/student_screens/book_detail.dart';
 import 'dart:math';
+
+import 'components.dart';
 
 var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
@@ -113,44 +115,13 @@ class _AssignBooksListViewState extends State<AssignBooksListView> {
                         1.0);
 
                 var cardItem = Positioned.directional(
-                  top: padding + verticalInset * max(-delta, -0.75),
-                  bottom: padding + verticalInset * max(-delta, -0.75),
-                  start: start,
-                  textDirection: TextDirection.rtl,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(3.0, 6.0),
-                                blurRadius: 10.0)
-                          ]),
-                      child: AspectRatio(
-                        aspectRatio: cardAspectRatio,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.asset(assignbooks[i].imageurl,
-                                fit: BoxFit.cover),
-                            Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 8.0),
-                                  child: Text(assignbooks[i].title,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline2),
-                                ))
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+                    top: padding + verticalInset * max(-delta, -0.75),
+                    bottom: padding + verticalInset * max(-delta, -0.75),
+                    start: start,
+                    textDirection: TextDirection.rtl,
+                    child: CardBook(
+                      book: assignbooks[i],
+                    ));
                 cardList.add(cardItem);
               }
             }

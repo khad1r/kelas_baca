@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/components/components.dart';
 import 'package:kelas_baca/models/models.dart';
 import 'package:kelas_baca/api/mock_student_service.dart';
+import 'package:provider/provider.dart';
 // import 'package:kelas_baca/widget/cards.dart';
 // import 'package:kelas_baca/widget/favorite.dart';
 
-class StudentHome extends StatelessWidget {
-  final mockService = MockStudentService();
-
+class StudentHome extends StatefulWidget {
   StudentHome({Key? key}) : super(key: key);
+
+  @override
+  State<StudentHome> createState() => _StudentHomeState();
+}
+
+class _StudentHomeState extends State<StudentHome> {
+  final mockService = MockStudentService();
+  late StudentService studentService;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    studentService = Provider.of<Service>(context, listen: false).userService;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,7 @@ class StudentHome extends StatelessWidget {
           ),
         ),
         FutureBuilder(
-          future: mockService.getAssignBooks(),
+          future: studentService.getBooks(),
           builder: (context, AsyncSnapshot<List<Book>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return AssignBooksListView(assignbooks: snapshot.data ?? []);
@@ -51,20 +63,20 @@ class StudentHome extends StatelessWidget {
             ],
           ),
         ),
-        FutureBuilder(
-          future: mockService.getFavoriteBooks(),
-          builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return FavoriteBooksListview(favoritebooks: snapshot.data ?? []);
-            } else {
-              // 10
-              return SizedBox(
-                height: 200,
-                child: const Center(child: CircularProgressIndicator()),
-              );
-            }
-          },
-        ),
+        // FutureBuilder(
+        //   future: mockService.getFavoriteBooks(),
+        //   builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.done) {
+        //       return FavoriteBooksListview(favoritebooks: snapshot.data ?? []);
+        //     } else {
+        //       // 10
+        //       return SizedBox(
+        //         height: 200,
+        //         child: const Center(child: CircularProgressIndicator()),
+        //       );
+        //     }
+        //   },
+        // ),
       ],
     );
   }

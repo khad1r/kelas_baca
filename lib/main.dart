@@ -14,10 +14,23 @@ Future<void> main() async {
   runApp(KelasBaca());
 }
 
-class KelasBaca extends StatelessWidget {
+class KelasBaca extends StatefulWidget {
   KelasBaca({Key? key}) : super(key: key);
 
+  @override
+  State<KelasBaca> createState() => _KelasBacaState();
+}
+
+class _KelasBacaState extends State<KelasBaca> {
   final Service _service = Service();
+
+  late AppRouter _appRouter;
+
+  @override
+  void initState() {
+    _appRouter = AppRouter(service: _service);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +44,10 @@ class KelasBaca extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeApp.dark(),
           title: 'Kelas Baca',
-          home: const Wrapper(),
+          home: Router(
+            routerDelegate: _appRouter,
+            backButtonDispatcher: RootBackButtonDispatcher(),
+          ),
         ));
   }
 }

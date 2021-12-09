@@ -21,8 +21,9 @@ class _teacherHomeState extends State<teacherHome> {
 
   @override
   Widget build(BuildContext context) {
-    final teacherService =
+    final TeacherService teacherService =
         Provider.of<Service>(context, listen: false).userService;
+    final name = Provider.of<Service>(context, listen: false).getUserData!.Name;
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.blue[900],
@@ -35,7 +36,7 @@ class _teacherHomeState extends State<teacherHome> {
                 // 4
                 builder: (context) => ClassCreate(
                   onCreate: (className) {
-                    teacherService.createClass(className);
+                    teacherService.createClass(className, name);
                     Navigator.of(context).pop();
                     setState(() {});
                   },

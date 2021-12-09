@@ -23,11 +23,12 @@ class TeacherService {
         .snapshots();
   }
 
-  createClass(String name) {
+  createClass(String name, String teacher) {
     collection.add({
       'name': name,
       'Annoucement': '',
-      'teacher': this.teacherID
+      'teacher': this.teacherID,
+      'teacher_name': teacher,
     }).then((value) => print("Class Added"))
         // .catchError((error) => print("Failed to add Class: $error"))
         ;

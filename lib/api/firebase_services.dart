@@ -3,3 +3,4 @@ export './auth_service.dart';
 export './firebase_parent_service.dart';
 export './service.dart';
 export './child_service.dart';
+export './student_service.dart';

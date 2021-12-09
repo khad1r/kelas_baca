@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../models/models.dart';
+import 'package:kelas_baca/screens/student_screens/read_book.dart';
+import '../../models/models.dart';
 
 class BookDetail extends StatefulWidget {
   Book book;
@@ -31,7 +32,7 @@ class _BookDetailState extends State<BookDetail> {
                   ),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(widget.book.imageurl),
+                      image: NetworkImage(widget.book.imageurl),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
@@ -68,9 +69,16 @@ class _BookDetailState extends State<BookDetail> {
                               horizontal: 75, vertical: 10),
                         ),
                         onPressed: () {
-                          var snackBar = SnackBar(
-                              content: Text('Read ${widget.book.title}'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ReadBook(book: widget.book)),
+                          );
+
+                          // var snackBar = SnackBar(
+                          //     content: Text('Read ${widget.book.title}'));
+                          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         child: Text('Baca',
                             style: Theme.of(context).textTheme.bodyText1),

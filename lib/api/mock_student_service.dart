@@ -12,7 +12,7 @@ class MockStudentService {
 
   Future<List<Book>> getAssignBooks() async {
     // Simulate api request wait time
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 5000));
     // Load json from file system
     final dataString =
         await _loadAsset('assets/sample_data/sample_assign_books.json');

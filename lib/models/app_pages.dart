@@ -5,6 +5,7 @@ class AppPages {
   static String onboardingPath = '/onboarding';
   static String parentHome = '/parent';
   static String teacherHome = '/teacher';
+  static String studentHome = '/student';
   static String profilePath = '/profile';
   static String classPath = '/class';
   static String newClass = '/newClass';

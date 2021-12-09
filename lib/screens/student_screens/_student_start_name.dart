@@ -97,7 +97,7 @@ class _StudentNameState extends State<StudentName> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => StudentApp(),
+                                  builder: (context) => StudentMain(),
                                 ),
                               );
                             },
