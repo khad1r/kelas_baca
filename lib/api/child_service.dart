@@ -39,8 +39,13 @@ class ChildService {
     return 'Proses Berhasil';
   }
 
-  Stream<DocumentSnapshot> getChild() {
-    return document.snapshots();
+  // Stream<DocumentSnapshot> getChild() {
+  //   return document.snapshots();
+  // }
+
+  Future<Map<String, dynamic>> getChild() async {
+    final childget = await document.get();
+    return childget.data() as Map<String, dynamic>;
   }
 
   Stream<QuerySnapshot> getBooks() {

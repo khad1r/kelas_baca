@@ -98,7 +98,7 @@ class StudentService {
     for (var i = 0; i < _favoriteList.length; i++) {
       final book = await classDoc
           .collection('book')
-          .doc(booksId.elementAt(i))
+          .doc(_favoriteList[i])
           .get()
           .then((value) => value.data());
       Map<String, dynamic> data = book as Map<String, dynamic>;

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/child_service.dart';
-import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:kelas_baca/components/components.dart';
 import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +15,10 @@ class ChildScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    childService =
-        Provider.of<Service>(context, listen: false).userService.childDoc;
+    final service = Provider.of<Service>(context, listen: false).userService;
+    if (service is ParentService) {
+      childService = service.childDoc;
+    }
     return SafeArea(
         child: Scaffold(
             backgroundColor: Colors.blueAccent,
@@ -75,25 +76,23 @@ class ChildScreen extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 100,
-                    child: StreamBuilder<DocumentSnapshot>(
-                        stream: childService!.getChild(),
+                    child: FutureBuilder<Map<String, dynamic>>(
+                        future: childService!.getChild(),
                         builder: (BuildContext context,
-                            AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            AsyncSnapshot<Map<String, dynamic>> snapshot) {
                           if (snapshot.connectionState ==
-                              ConnectionState.active) {
-                            Map<String, dynamic> data =
-                                snapshot.data!.data() as Map<String, dynamic>;
+                              ConnectionState.done) {
                             return Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  data['name'],
+                                  snapshot.data!['name'],
                                   style: Theme.of(context).textTheme.headline1,
                                 ),
                                 Text(
-                                  "${data['Age']} Tahun",
+                                  "${snapshot.data!['Age']} Tahun",
                                   style: Theme.of(context).textTheme.headline2,
                                 ),
                               ],

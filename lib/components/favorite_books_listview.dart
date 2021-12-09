@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kelas_baca/components/card_book.dart';
 // import 'package:kelas_baca/service/Listbook.dart';
 import '../screens/student_screens/book_detail.dart';
 import '../models/models.dart';
@@ -48,45 +49,40 @@ class FavoriteBooksListview extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 20.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: InkWell(
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            BookDetail(book: favoritebooks[i]),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 240,
-                    width: 320,
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(3.0, 6.0),
-                          blurRadius: 10.0)
-                    ]),
-                    child: AspectRatio(
-                      aspectRatio: cardAspectRatio,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: <Widget>[
-                          Image.network(favoritebooks[i].imageurl,
-                              fit: BoxFit.cover),
-                          Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 12.0),
-                                child: Text(favoritebooks[i].title,
-                                    style:
-                                        Theme.of(context).textTheme.headline3),
-                              ))
-                        ],
-                      ),
-                    ),
-                  )),
+              child: Container(
+                  width: 320,
+                  child: CardBook(
+                    book: favoritebooks[i],
+                    aspectRatio: cardAspectRatio,
+                    onTap: (book) async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookDetail(book: book),
+                        ),
+                      );
+                    },
+                  )
+                  // AspectRatio(
+                  //   aspectRatio: cardAspectRatio,
+                  //   child: Stack(
+                  //     fit: StackFit.expand,
+                  //     children: <Widget>[
+                  //       Image.network(favoritebooks[i].imageurl,
+                  //           fit: BoxFit.cover),
+                  //       Align(
+                  //           alignment: Alignment.bottomLeft,
+                  //           child: Padding(
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: 16.0, vertical: 12.0),
+                  //             child: Text(favoritebooks[i].title,
+                  //                 style:
+                  //                     Theme.of(context).textTheme.headline3),
+                  //           ))
+                  //     ],
+                  //   ),
+                  // ),
+                  ),
             ));
         favList.add(favItem);
       }

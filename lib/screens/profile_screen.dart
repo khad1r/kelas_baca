@@ -23,10 +23,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late TextTheme textTheme;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void didChangeDependencies() {
+    textTheme = Theme.of(context).textTheme;
+    final userservice =
+        Provider.of<Service>(context, listen: false).getUserData!;
+    if (userservice != null) {
+      user = userservice;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    textTheme = Theme.of(context).textTheme;
-    user = Provider.of<Service>(context, listen: false).getUserData!;
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
@@ -199,8 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
           ),
           onPressed: () async {
-            Navigator.of(context).pop();
-            Provider.of<Service>(context, listen: false).auth.signOut();
+            //Navigator.of(context).pop();
+            await Provider.of<Service>(context, listen: false).auth.signOut();
           },
           child: Text('Log Out', style: textTheme.bodyText1),
         ),

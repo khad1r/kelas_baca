@@ -16,8 +16,11 @@ class StudentMore extends StatefulWidget {
 class _StudentMoreState extends State<StudentMore> {
   late StudentService studentService;
   void didChangeDependencies() {
+    final service = Provider.of<Service>(context).userService;
+    if (service is StudentService) {
+      studentService = service;
+    }
     super.didChangeDependencies();
-    studentService = Provider.of<Service>(context, listen: false).userService;
   }
 
   @override

@@ -56,7 +56,9 @@ class Service extends ChangeNotifier {
       _userData = null;
       _isInitialized = false;
     }
-    notifyListeners();
+    Future.delayed(Duration.zero, () async {
+      notifyListeners();
+    });
   }
 
   bool didSelectUser = false;

@@ -41,12 +41,16 @@ class _ChildSettingState extends State<ChildSetting> {
 
   @override
   void didChangeDependencies() {
-    childService =
-        Provider.of<Service>(context, listen: false).userService.childDoc;
+    final service = Provider.of<Service>(context).userService;
+    if (service is ParentService) {
+      childService = service.childDoc;
+    }
+
     classCode = childService.classId;
     setState(() {
       classCodeTextController.text = classCode;
     });
+    super.didChangeDependencies();
   }
 
   @override
@@ -113,8 +117,8 @@ class _ChildSettingState extends State<ChildSetting> {
                 padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
               ),
               onPressed: (childService.classId != "")
-                  ? () {
-                      Provider.of<Service>(context, listen: false)
+                  ? () async {
+                      await Provider.of<Service>(context, listen: false)
                           .auth
                           .logInStudent(id: childService.getId);
                     }
