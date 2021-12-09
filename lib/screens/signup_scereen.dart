@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/api/_service.dart';
 import 'package:provider/provider.dart';
-import './teacher_main.dart';
+import '../api/kelas_baca_services.dart';
 
 class SignUp extends StatefulWidget {
   final String signUpType;
@@ -48,7 +46,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Kelas Baca",
+                    Text('Kelas Baca',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
@@ -113,7 +111,7 @@ class _SignUpState extends State<SignUp> {
                             style: Theme.of(context).textTheme.bodyText1,
                             validator: (String? value) {
                               if (value!.isEmpty ||
-                                  !RegExp(r"^[a-z A-Z]+$").hasMatch(value) ||
+                                  !RegExp(r'^[a-z A-Z]+$').hasMatch(value) ||
                                   value.length < 2) {
                                 return 'Masukan nama yang benar!';
                               }

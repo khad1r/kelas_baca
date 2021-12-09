@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
+import '../api/kelas_baca_services.dart';
+import '../models/models.dart';
 
 import 'screens.dart';
 
@@ -55,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Kelas Baca",
+                    Text('Kelas Baca',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w800,
@@ -93,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SignUp(
-                                  signUpType: "Teacher",
+                                  signUpType: 'Teacher',
                                 ),
                               ),
                             );
@@ -113,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SignUp(
-                                  signUpType: "Parent",
+                                  signUpType: 'Parent',
                                 ),
                               ),
                             );
@@ -150,8 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           _buildInput(
             textController: emailTextController,
-            label: "E-mail",
-            hint: "Masukan Email...",
+            label: 'E-mail',
+            hint: 'Masukan Email...',
             keyboardType: TextInputType.emailAddress,
             icon: Icons.email_outlined,
             validator: (String? value) {
@@ -168,9 +167,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           _buildInput(
             textController: passwordTextController,
-            label: "Password",
+            label: 'Password',
             keyboardType: TextInputType.visiblePassword,
-            hint: "Masukan Password...",
+            hint: 'Masukan Password...',
             icon: Icons.lock_outline,
             obscurity: !passwordVisibility,
             suffixIcon: InkWell(

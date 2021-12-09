@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/components/components.dart';
 import 'package:provider/provider.dart';
-import './student_screens.dart';
+import '../../api/kelas_baca_services.dart';
+import '../../components/components.dart';
 
 class StudentMore extends StatefulWidget {
   StudentMore({Key? key}) : super(key: key);

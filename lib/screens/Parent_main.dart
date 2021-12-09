@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/models/models.dart';
-import 'package:provider/provider.dart';
-
+import '../models/models.dart';
 import '../theme.dart';
 import './parent_screens/parent_screens.dart';
 import 'screens.dart';

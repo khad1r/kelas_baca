@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
 import 'package:provider/provider.dart';
+import '../api/kelas_baca_services.dart';
 import '../models/models.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void didChangeDependencies() {
     textTheme = Theme.of(context).textTheme;
     final userservice =
-        Provider.of<Service>(context, listen: false).getUserData!;
+        Provider.of<Service>(context, listen: false).getUserData;
     if (userservice != null) {
       user = userservice;
     }

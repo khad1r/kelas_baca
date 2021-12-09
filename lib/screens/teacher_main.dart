@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/models/models.dart';
+import '../models/models.dart';
 import '../theme.dart';
 import './teacher_screens/teacher_screens.dart';
 import 'screens.dart';
-import 'teacher_screens/teacher_chat.dart';
 
 class TeacherApp extends StatelessWidget {
   Widget build(BuildContext context) {

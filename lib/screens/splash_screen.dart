@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
 import 'package:provider/provider.dart';
-
+import '../api/kelas_baca_services.dart';
 import '../models/models.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.blueAccent,
+      child: Center(
+          child: Container(
+        width: 150,
+        // child: Image.asset('assets/images/splashicon.png'),
+        child: CircularProgressIndicator(),
+      )),
     );
   }
 }

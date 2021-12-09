@@ -1,4 +1,4 @@
-export '_class_code.dart';
-export '_home_screen.dart';
-export '_more_screen.dart';
-export '_student_start_name.dart';
+export '_home.dart';
+export '_profile.dart';
+export '_book_detail.dart';
+export '_read_book.dart';

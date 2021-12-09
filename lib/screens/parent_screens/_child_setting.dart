@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
-
-import '../student_main.dart';
+import '../../api/kelas_baca_services.dart';
+import '../../models/models.dart';
 
 class ChildSetting extends StatefulWidget {
   // // String className;
@@ -42,8 +39,8 @@ class _ChildSettingState extends State<ChildSetting> {
   @override
   void didChangeDependencies() {
     final service = Provider.of<Service>(context).userService;
-    if (service is ParentService) {
-      childService = service.childDoc;
+    if (service is ParentService && service.childDoc != null) {
+      childService = service.childDoc!;
     }
 
     classCode = childService.classId;
@@ -70,7 +67,7 @@ class _ChildSettingState extends State<ChildSetting> {
         padding: EdgeInsets.all(15),
         scrollDirection: Axis.vertical,
         children: [
-          Text("Detail", style: Theme.of(context).textTheme.headline1),
+          Text('Detail', style: Theme.of(context).textTheme.headline1),
           SizedBox(height: 30),
           TextField(
             controller: classCodeTextController,
@@ -80,7 +77,7 @@ class _ChildSettingState extends State<ChildSetting> {
               border: InputBorder.none,
               fillColor: Colors.blueAccent.withOpacity(0.5),
               filled: true,
-              hintText: "Kode Kelas",
+              hintText: 'Kode Kelas',
               hintStyle: TextStyle(color: Colors.white30),
               prefixIcon:
                   Icon(Icons.people_alt, color: Colors.white, size: 26.0),
@@ -116,7 +113,7 @@ class _ChildSettingState extends State<ChildSetting> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
               ),
-              onPressed: (childService.classId != "")
+              onPressed: (childService.classId != '')
                   ? () async {
                       await Provider.of<Service>(context, listen: false)
                           .auth

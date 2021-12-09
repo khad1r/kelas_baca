@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components.dart';
-import '../screens/student_screens/book_detail.dart';
+import '../screens/student_screens/_book_detail.dart';
 import '../models/models.dart';
 
 class FavoriteBooksListview extends StatelessWidget {

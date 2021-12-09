@@ -9,7 +9,7 @@ class ParentService {
       FirebaseFirestore.instance.collection('student');
   final CollectionReference classRef =
       FirebaseFirestore.instance.collection('classes');
-  late ChildService childDoc;
+  ChildService? childDoc;
 
   ParentService({required this.parentID});
 
@@ -37,6 +37,6 @@ class ParentService {
 
   setChild(String documentId) {
     childDoc = ChildService(id: documentId);
-    childDoc.init();
+    childDoc!.init();
   }
 }

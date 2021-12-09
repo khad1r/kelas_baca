@@ -36,7 +36,7 @@ class _ModalLogoutState extends State<ModalLogout> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Login Orang Tua",
+            Text('Login Orang Tua',
                 style: Theme.of(context).textTheme.headline3),
             Padding(
               padding: EdgeInsets.all(25),
@@ -47,9 +47,9 @@ class _ModalLogoutState extends State<ModalLogout> {
             ),
             _buildInput(
               textController: passwordTextController,
-              label: "Password Orang Tua",
+              label: 'Password Orang Tua',
               keyboardType: TextInputType.visiblePassword,
-              hint: "Masukan Password...",
+              hint: 'Masukan Password...',
               icon: Icons.lock_outline,
               obscurity: !passwordVisibility,
               suffixIcon: InkWell(

@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../models/models.dart';
 
-class AnnouceScreen extends StatefulWidget {
-  // final Function(groceryItem) onCreate;
-  final Function(String) onSave;
-  String annoucement;
-  AnnouceScreen({
+class ClassCreate extends StatefulWidget {
+  final Function(String) onCreate;
+  ClassCreate({
     Key? key,
-    required this.annoucement,
-    required this.onSave,
+    required this.onCreate,
   }) : super(key: key);
 
   @override
-  _AnnouceScreenState createState() => _AnnouceScreenState();
+  _ClassCreateState createState() => _ClassCreateState();
 }
 
-class _AnnouceScreenState extends State<AnnouceScreen> {
-  final _TextController = TextEditingController();
-  String annoucement = '';
+class _ClassCreateState extends State<ClassCreate> {
+  final _nameController = TextEditingController();
+  String _name = '';
 
   @override
   void initState() {
-    annoucement = widget.annoucement;
-    _TextController.text = widget.annoucement;
-    _TextController.addListener(() {
+    _nameController.addListener(() {
       setState(() {
-        annoucement = _TextController.text;
+        _name = _nameController.text;
       });
     });
 
@@ -35,7 +29,7 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
 
   @override
   void dispose() {
-    _TextController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -63,12 +57,12 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
           IconButton(
             icon: const Icon(Icons.check),
             onPressed: () {
-              widget.onSave(annoucement);
+              widget.onCreate(_name);
             },
           )
         ],
         title: Text(
-          'Pengumuman',
+          'Buat Kelas',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -77,14 +71,29 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            buildTextField(),
+            buildNameField(),
+            const SizedBox(height: 10.0),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                primary: Colors.blue[800],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
+              ),
+              onPressed: () async {
+                widget.onCreate(_name);
+              },
+              child: Text('Buat', style: Theme.of(context).textTheme.bodyText1),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget buildTextField() {
+  Widget buildNameField() {
     // 1
     return Column(
       // 2
@@ -92,25 +101,25 @@ class _AnnouceScreenState extends State<AnnouceScreen> {
       children: [
         // 3
         Text(
-          'Pengumuman',
+          'Nama Kelas',
           style: Theme.of(context).textTheme.headline2,
         ),
-        SizedBox(height: 25),
         // 4
         TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          controller: _TextController,
+          controller: _nameController,
           decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
+            // 8
+            hintText: 'contoh: Kelas 1',
+            // 9
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
+            // focusedBorder: UnderlineInputBorder(
+            //   borderSide: BorderSide(color: Colors.blueAccent),
+            // ),
+            // border: UnderlineInputBorder(
+            //   borderSide: BorderSide(color: Colors.blueAccent),
+            // ),
           ),
         ),
       ],

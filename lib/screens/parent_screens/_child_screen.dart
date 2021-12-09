@@ -1,13 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/components/components.dart';
-import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
-
-import '_child_screen_empty.dart';
-import '_child_screen_home.dart';
-import '_child_setting.dart';
+import '../../api/kelas_baca_services.dart';
+import 'parent_screens.dart';
 
 class ChildScreen extends StatelessWidget {
   ChildScreen({Key? key}) : super(key: key);
@@ -16,8 +10,8 @@ class ChildScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = Provider.of<Service>(context, listen: false).userService;
-    if (service is ParentService) {
-      childService = service.childDoc;
+    if (service is ParentService && service.childDoc != null) {
+      childService = service.childDoc!;
     }
     return SafeArea(
         child: Scaffold(
@@ -29,7 +23,6 @@ class ChildScreen extends StatelessWidget {
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      service.childDoc = null;
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 2,
@@ -118,7 +111,7 @@ class ChildScreen extends StatelessWidget {
                                 return Center(
                                     child: CircularProgressIndicator());
                               }
-                              if (snapshot.data != "") {
+                              if (snapshot.data != '') {
                                 return ChildScreenHome();
                               } else {
                                 return EmptyClass();

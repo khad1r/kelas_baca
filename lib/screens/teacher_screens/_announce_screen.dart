@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../models/models.dart';
 
-class ClassCreate extends StatefulWidget {
+class AnnouceScreen extends StatefulWidget {
   // final Function(groceryItem) onCreate;
-  final Function(String) onCreate;
-  ClassCreate({
+  final Function(String) onSave;
+  final String annoucement;
+  AnnouceScreen({
     Key? key,
-    required this.onCreate,
+    required this.annoucement,
+    required this.onSave,
   }) : super(key: key);
 
   @override
-  _ClassCreateState createState() => _ClassCreateState();
+  _AnnouceScreenState createState() => _AnnouceScreenState();
 }
 
-class _ClassCreateState extends State<ClassCreate> {
-  final _nameController = TextEditingController();
-  String _name = '';
+class _AnnouceScreenState extends State<AnnouceScreen> {
+  final _TextController = TextEditingController();
+  String annoucement = '';
 
   @override
   void initState() {
-    _nameController.addListener(() {
+    annoucement = widget.annoucement;
+    _TextController.text = widget.annoucement;
+    _TextController.addListener(() {
       setState(() {
-        _name = _nameController.text;
+        annoucement = _TextController.text;
       });
     });
 
@@ -31,7 +34,7 @@ class _ClassCreateState extends State<ClassCreate> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _TextController.dispose();
     super.dispose();
   }
 
@@ -59,12 +62,12 @@ class _ClassCreateState extends State<ClassCreate> {
           IconButton(
             icon: const Icon(Icons.check),
             onPressed: () {
-              widget.onCreate(_name);
+              widget.onSave(annoucement);
             },
           )
         ],
         title: Text(
-          'Buat Kelas',
+          'Pengumuman',
           style: Theme.of(context).textTheme.headline1,
         ),
       ),
@@ -73,29 +76,14 @@ class _ClassCreateState extends State<ClassCreate> {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            buildNameField(),
-            const SizedBox(height: 10.0),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: Colors.blue[800],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 20),
-              ),
-              onPressed: () async {
-                widget.onCreate(_name);
-              },
-              child: Text('Buat', style: Theme.of(context).textTheme.bodyText1),
-            ),
+            buildTextField(),
           ],
         ),
       ),
     );
   }
 
-  Widget buildNameField() {
+  Widget buildTextField() {
     // 1
     return Column(
       // 2
@@ -103,25 +91,25 @@ class _ClassCreateState extends State<ClassCreate> {
       children: [
         // 3
         Text(
-          'Nama Kelas',
+          'Pengumuman',
           style: Theme.of(context).textTheme.headline2,
         ),
+        SizedBox(height: 25),
         // 4
         TextField(
-          controller: _nameController,
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          controller: _TextController,
           decoration: InputDecoration(
-            // 8
-            hintText: 'contoh: Kelas 1',
-            // 9
-            enabledBorder: const UnderlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-            // focusedBorder: UnderlineInputBorder(
-            //   borderSide: BorderSide(color: Colors.blueAccent),
-            // ),
-            // border: UnderlineInputBorder(
-            //   borderSide: BorderSide(color: Colors.blueAccent),
-            // ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
           ),
         ),
       ],

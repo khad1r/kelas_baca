@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/api/_service.dart';
-import 'package:kelas_baca/screens/teacher_screens/_class_screen.dart';
 import 'package:provider/provider.dart';
-import './teacher_screens.dart';
-import 'class_create.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter_profile_picture/flutter_profile_picture.dart'
+import '../../api/kelas_baca_services.dart';
+import './teacher_screens.dart';
 
 class teacherHome extends StatefulWidget {
   teacherHome({Key? key}) : super(key: key);
@@ -102,7 +97,7 @@ class _teacherHomeState extends State<teacherHome> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 5),
-                                    child: ClassCard(data["name"]),
+                                    child: ClassCard(data['name']),
                                   ),
                                 );
                               }).toList(),

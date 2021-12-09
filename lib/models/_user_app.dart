@@ -7,5 +7,5 @@ class UserApp {
     required this.role,
   });
   factory UserApp.fromJson(Map<dynamic, dynamic> json) =>
-      UserApp(Name: json["name"] as String, role: json["role"] as String);
+      UserApp(Name: json['name'] as String, role: json['role'] as String);
 }

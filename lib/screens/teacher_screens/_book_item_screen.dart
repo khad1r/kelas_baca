@@ -3,27 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kelas_baca/components/components.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:nanoid/nanoid.dart';
 
-import 'package:flutter/foundation.dart';
+import '../../components/components.dart';
 import '../../models/models.dart';
 
 class BookItemScreen extends StatefulWidget {
-  // // 1
-  // final Function(GroceryItem) onCreate;
-  // // 2
-  // final Function(GroceryItem) onUpdate;
-  // // 1
   final Function(BookRaw) onCreate;
-  // 2
   final Function(BookRaw) onUpdate;
 
   final Function? onDelete;
-  // 3
   final Book? originalItem;
-  // 4
   final bool isUpdating;
 
   BookItemScreen(
@@ -51,12 +42,6 @@ class _BookItemScreenState extends State<BookItemScreen> {
   bool process = false;
   File? imagefile;
   File? pdffile;
-
-  // Importance _importance = Importance.low;
-  // DateTime _dueDate = DateTime.now();
-  // TimeOfDay _timeOfDay = TimeOfDay.now();
-  // Color _currentColor = Colors.green;
-  // int _currentSliderValue = 0;
 
   @override
   void initState() {
@@ -210,15 +195,6 @@ class _BookItemScreenState extends State<BookItemScreen> {
             maxLines: null,
             decoration: InputDecoration(
               hintText: 'Judul Buku',
-              // enabledBorder: const UnderlineInputBorder(
-              //   borderSide: BorderSide(color: Colors.white),
-              // ),
-              // focusedBorder: UnderlineInputBorder(
-              //   borderSide: BorderSide(color: Colors.white),
-              // ),
-              // border: UnderlineInputBorder(
-              //   borderSide: BorderSide(color: Colors.white),
-              // ),
             ),
           ),
         ],

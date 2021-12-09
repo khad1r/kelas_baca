@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/screens/student_screens/read_book.dart';
 import 'package:provider/provider.dart';
+import '../../api/kelas_baca_services.dart';
 import '../../models/models.dart';
+import 'student_screens.dart';
 
 class BookDetail extends StatefulWidget {
-  Book book;
+  final Book book;
   BookDetail({Key? key, required this.book}) : super(key: key);
   @override
   _BookDetailState createState() => _BookDetailState();

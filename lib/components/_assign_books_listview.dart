@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
-import '../screens/student_screens/book_detail.dart';
+import '../screens/student_screens/_book_detail.dart';
 import 'dart:math';
 
 import 'components.dart';

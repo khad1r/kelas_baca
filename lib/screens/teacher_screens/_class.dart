@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/api/_service.dart';
 import 'package:provider/provider.dart';
-import './book_item_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../api/kelas_baca_services.dart';
+import '../../api/_service.dart';
 import '../../models/models.dart';
 import '../../components/components.dart';
-import './_class_setting.dart';
-import 'announce_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'teacher_screens.dart';
 
 class ClassScreen extends StatefulWidget {
   const ClassScreen({Key? key}) : super(key: key);
@@ -166,7 +164,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                     children: [
                                       _buildBooksView(),
                                       Text(
-                                        "Siswa",
+                                        'Siswa',
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline1,
@@ -265,48 +263,48 @@ class _ClassScreenState extends State<ClassScreen> {
     );
   }
 
-  Widget _buildSearchCard() {
-    return Card(
-      color: Colors.blueAccent,
-      elevation: 4,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                // startSearch(searchTextController.text);
-                // final currentFocus = FocusScope.of(context);
-                // if (!currentFocus.hasPrimaryFocus) {
-                //   currentFocus.unfocus();
-                // }
-              },
-            ),
-            const SizedBox(
-              width: 6.0,
-            ),
-            Expanded(
-                child: TextField(
-              decoration: const InputDecoration(
-                  border: InputBorder.none, hintText: 'Search'),
-              autofocus: false,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (value) {
-                // if (!previousSearches.contains(value)) {
-                //   previousSearches.add(value);
-                //   savePreviousSearches();
-                // }
-              },
-              controller: searchTextController,
-            )),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildSearchCard() {
+  //   return Card(
+  //     color: Colors.blueAccent,
+  //     elevation: 4,
+  //     shape: const RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.all(Radius.circular(8.0))),
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(4.0),
+  //       child: Row(
+  //         children: [
+  //           IconButton(
+  //             icon: const Icon(Icons.search),
+  //             onPressed: () {
+  //               // startSearch(searchTextController.text);
+  //               // final currentFocus = FocusScope.of(context);
+  //               // if (!currentFocus.hasPrimaryFocus) {
+  //               //   currentFocus.unfocus();
+  //               // }
+  //             },
+  //           ),
+  //           const SizedBox(
+  //             width: 6.0,
+  //           ),
+  //           Expanded(
+  //               child: TextField(
+  //             decoration: const InputDecoration(
+  //                 border: InputBorder.none, hintText: 'Search'),
+  //             autofocus: false,
+  //             textInputAction: TextInputAction.done,
+  //             onSubmitted: (value) {
+  //               // if (!previousSearches.contains(value)) {
+  //               //   previousSearches.add(value);
+  //               //   savePreviousSearches();
+  //               // }
+  //             },
+  //             controller: searchTextController,
+  //           )),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildStudentView() {
     return StreamBuilder<QuerySnapshot>(

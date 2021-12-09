@@ -17,6 +17,14 @@ class ChildService {
         .doc(id)
         .get()
         .then((value) => value.data()!['class'] as String);
+    final classes = await FirebaseFirestore.instance
+        .collection('classes')
+        .doc(classId)
+        .get();
+    if (!classes.exists) {
+      classId = '';
+      await document.update({'class': ''});
+    }
     return classId;
   }
 

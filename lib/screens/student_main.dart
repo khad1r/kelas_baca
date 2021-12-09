@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/kelas_baca_services.dart';
-import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
+import '../api/kelas_baca_services.dart';
+import '../models/models.dart';
 import '../components/components.dart';
 import 'student_screens/student_screens.dart';
 
@@ -23,7 +23,7 @@ class StudentMain extends StatefulWidget {
 }
 
 class _StudentMainState extends State<StudentMain> {
-  String name = "";
+  String name = '';
   late StudentService studentService;
   void didChangeDependencies() {
     super.didChangeDependencies();

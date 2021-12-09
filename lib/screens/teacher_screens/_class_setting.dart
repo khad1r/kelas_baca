@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ClassSetting extends StatefulWidget {
-  String className;
-  String classCode;
-  Function() onDelete;
-  Function(String) onNameChange;
+  final String className;
+  final String classCode;
+  final Function() onDelete;
+  final Function(String) onNameChange;
   ClassSetting(
       {Key? key,
       required this.classCode,
@@ -51,7 +51,7 @@ class _ClassSettingState extends State<ClassSetting> {
         padding: EdgeInsets.all(15),
         scrollDirection: Axis.vertical,
         children: [
-          Text("Detail Kelas", style: Theme.of(context).textTheme.headline1),
+          Text('Detail Kelas', style: Theme.of(context).textTheme.headline1),
           SizedBox(height: 30),
           TextField(
             controller: classNameTextController,
@@ -61,7 +61,7 @@ class _ClassSettingState extends State<ClassSetting> {
                 border: InputBorder.none,
                 fillColor: Colors.blueAccent.withOpacity(0.5),
                 filled: true,
-                hintText: "Nama Kelas",
+                hintText: 'Nama Kelas',
                 hintStyle: TextStyle(color: Colors.white30),
                 prefixIcon:
                     Icon(Icons.people_alt, color: Colors.white, size: 26.0),
@@ -84,7 +84,7 @@ class _ClassSettingState extends State<ClassSetting> {
                 border: InputBorder.none,
                 fillColor: Colors.blueAccent.withOpacity(0.5),
                 filled: true,
-                hintText: "Kode Kelas",
+                hintText: 'Kode Kelas',
                 hintStyle: TextStyle(color: Colors.white30),
                 prefixIcon:
                     Icon(Icons.vpn_key, color: Colors.white30, size: 26.0),
