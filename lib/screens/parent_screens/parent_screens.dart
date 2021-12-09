@@ -1,3 +1,8 @@
-export './_home_sreen.dart';
-export './_more_screen.dart';
-export 'parent_chat.dart';
+export '_add_child.dart';
+export '_book_detail_parent.dart';
+export '_child_screen.dart';
+export '_child_screen_empty.dart';
+export '_child_screen_home.dart';
+export '_child_setting.dart';
+export '_home_sreen.dart';
+export '_parent_chat.dart';

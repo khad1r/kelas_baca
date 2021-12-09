@@ -1,12 +1,6 @@
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:kelas_baca/models/models.dart';
 
-import 'firebase_services.dart';
+import './kelas_baca_services.dart';
 
 class ParentService {
   final String parentID;
@@ -35,9 +29,7 @@ class ParentService {
       'Parent': this.parentID,
       'class': '',
       'favorite': [],
-    }).then((value) => print("Child Added"))
-        // .catchError((error) => print("Failed to add Class: $error"))
-        ;
+    }).then((value) => print('Child Added'));
   }
 
   Future<DocumentSnapshot> get getInfo =>

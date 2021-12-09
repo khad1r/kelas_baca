@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../models/models.dart';
 
 class AddChild extends StatefulWidget {
   // final Function(groceryItem) onCreate;
@@ -142,7 +141,7 @@ class _AddChildState extends State<AddChild> {
           ),
           validator: (String? value) {
             if (value!.isEmpty ||
-                !RegExp(r"^[a-z A-Z]+$").hasMatch(value) ||
+                !RegExp(r'^[a-z A-Z]+$').hasMatch(value) ||
                 value.length < 2) {
               return 'Masukan nama yang benar!';
             }

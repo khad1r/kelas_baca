@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:provider/provider.dart';
+import '../../api/kelas_baca_services.dart';
 import '../../models/models.dart';
 
 class BookDetail extends StatefulWidget {
-  Book book;
+  final Book book;
   BookDetail({Key? key, required this.book}) : super(key: key);
   @override
   _BookDetailState createState() => _BookDetailState();

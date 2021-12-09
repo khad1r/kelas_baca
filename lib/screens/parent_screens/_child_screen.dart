@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
+import 'package:kelas_baca/api/kelas_baca_services.dart';
 import 'package:kelas_baca/components/components.dart';
 import 'package:kelas_baca/models/models.dart';
 import 'package:provider/provider.dart';
 
-import 'child_screen_empty.dart';
-import 'child_screen_home.dart';
-import 'child_setting.dart';
+import '_child_screen_empty.dart';
+import '_child_screen_home.dart';
+import '_child_setting.dart';
 
 class ChildScreen extends StatelessWidget {
   ChildScreen({Key? key}) : super(key: key);
-  ChildService? childService;
+  late final ChildService childService;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ChildScreen extends StatelessWidget {
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      childService = null;
+                      service.childDoc = null;
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 2,
@@ -77,7 +77,7 @@ class ChildScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: 100,
                     child: FutureBuilder<Map<String, dynamic>>(
-                        future: childService!.getChild(),
+                        future: childService.getChild(),
                         builder: (BuildContext context,
                             AsyncSnapshot<Map<String, dynamic>> snapshot) {
                           if (snapshot.connectionState ==
@@ -111,7 +111,7 @@ class ChildScreen extends StatelessWidget {
                                   topLeft: Radius.circular(50.0),
                                   topRight: Radius.circular(50.0))),
                           child: FutureBuilder(
-                            future: childService!.getClassId(),
+                            future: childService.getClassId(),
                             builder: (BuildContext context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {

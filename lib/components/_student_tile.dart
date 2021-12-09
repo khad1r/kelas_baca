@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'profile_pic.dart';
+import '_profile_pic.dart';
 
 class StudentTile extends StatelessWidget {
   final String name;

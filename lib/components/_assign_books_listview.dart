@@ -10,7 +10,7 @@ var widgetAspectRatio = cardAspectRatio * 1.2;
 
 class AssignBooksListView extends StatefulWidget {
   final List<Book> assignbooks;
-  var currentPage;
+  late final currentPage;
 
   AssignBooksListView({Key? key, required this.assignbooks}) : super(key: key) {
     this.currentPage = this.assignbooks.length - 1.0;
@@ -21,39 +21,35 @@ class AssignBooksListView extends StatefulWidget {
 }
 
 class _AssignBooksListViewState extends State<AssignBooksListView> {
-  // final PageController controller = PageController();
+  late final PageController controller;
+  late final List<Book> assignbooks;
   var padding = 20.0;
   var verticalInset = 20.0;
-  // @override
-  // void initState() {
-  //   super.initState();
+  var currentPage;
 
-  //   /// Attach a listener which will update the state and refresh the page index
-  //   controller.addListener(() {
-  //     setState(() {
-  //       widget.currentPage = controller.page;
-  //     });
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    currentPage = widget.currentPage;
+    assignbooks = widget.assignbooks;
+    controller = PageController(initialPage: assignbooks.length - 1);
 
-  // @override
-  // void dispose() {
-  //   controller.dispose();
+    controller.addListener(() {
+      setState(() {
+        currentPage = controller.page;
+      });
+    });
+  }
 
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Book> assignbooks = widget.assignbooks;
-    PageController controller =
-        PageController(initialPage: assignbooks.length - 1);
-    controller.addListener(() {
-      setState(() {
-        widget.currentPage = controller.page;
-      });
-    });
-
     return Stack(
       children: [
         AspectRatio(
@@ -99,13 +95,13 @@ class _AssignBooksListViewState extends State<AssignBooksListView> {
                         child: AspectRatio(
                             aspectRatio: cardAspectRatio,
                             child: Center(
-                              child: Text("Tidak Ada Buku Untuk dibaca",
+                              child: Text('Tidak Ada Buku Untuk dibaca',
                                   style: Theme.of(context).textTheme.headline3),
                             )),
                       )));
             } else {
               for (var i = 0; i < assignbooks.length; i++) {
-                var delta = i - widget.currentPage;
+                var delta = i - currentPage!;
                 bool isOnRight = delta > 0;
 
                 var start = padding +

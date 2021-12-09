@@ -1,12 +1,5 @@
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../models/models.dart';
 
 class StudentService {
   final String studentID;
@@ -74,22 +67,7 @@ class StudentService {
           pdfurl: data['pdf'],
           description: data['description']));
     }
-    // await booksId.map((id) async {
-    //   final book = await classDoc
-    //       .collection('book')
-    //       .doc(id)
-    //       .get()
-    //       .then((value) => value.data());
-    //   print(book);
-    //   Map<String, dynamic> data = book as Map<String, dynamic>;
-    //   print(book);
-    //   books.add(Book(
-    //       id: data['id'],
-    //       title: data['title'],
-    //       imageurl: data['image'],
-    //       pdfurl: data['pdf'],
-    //       description: data['description']));
-    // });
+
     return books;
   }
 
@@ -109,22 +87,7 @@ class StudentService {
           pdfurl: data['pdf'],
           description: data['description']));
     }
-    // await booksId.map((id) async {
-    //   final book = await classDoc
-    //       .collection('book')
-    //       .doc(id)
-    //       .get()
-    //       .then((value) => value.data());
-    //   print(book);
-    //   Map<String, dynamic> data = book as Map<String, dynamic>;
-    //   print(book);
-    //   books.add(Book(
-    //       id: data['id'],
-    //       title: data['title'],
-    //       imageurl: data['image'],
-    //       pdfurl: data['pdf'],
-    //       description: data['description']));
-    // });
+
     return books;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/components/card_book.dart';
-// import 'package:kelas_baca/service/Listbook.dart';
+import 'components.dart';
 import '../screens/student_screens/book_detail.dart';
 import '../models/models.dart';
 
@@ -38,7 +37,7 @@ class FavoriteBooksListview extends StatelessWidget {
               child: AspectRatio(
                   aspectRatio: cardAspectRatio,
                   child: Center(
-                    child: Text("Tidak Ada Buku Favorit",
+                    child: Text('Tidak Ada Buku Favorit',
                         style: Theme.of(context).textTheme.headline3),
                   )),
             )),
@@ -62,27 +61,7 @@ class FavoriteBooksListview extends StatelessWidget {
                         ),
                       );
                     },
-                  )
-                  // AspectRatio(
-                  //   aspectRatio: cardAspectRatio,
-                  //   child: Stack(
-                  //     fit: StackFit.expand,
-                  //     children: <Widget>[
-                  //       Image.network(favoritebooks[i].imageurl,
-                  //           fit: BoxFit.cover),
-                  //       Align(
-                  //           alignment: Alignment.bottomLeft,
-                  //           child: Padding(
-                  //             padding: EdgeInsets.symmetric(
-                  //                 horizontal: 16.0, vertical: 12.0),
-                  //             child: Text(favoritebooks[i].title,
-                  //                 style:
-                  //                     Theme.of(context).textTheme.headline3),
-                  //           ))
-                  //     ],
-                  //   ),
-                  // ),
-                  ),
+                  )),
             ));
         favList.add(favItem);
       }

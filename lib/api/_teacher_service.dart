@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:kelas_baca/models/models.dart';
+import '../models/models.dart';
 
 class TeacherService {
   final String teacherID;
@@ -29,9 +28,7 @@ class TeacherService {
       'Annoucement': '',
       'teacher': this.teacherID,
       'teacher_name': teacher,
-    }).then((value) => print("Class Added"))
-        // .catchError((error) => print("Failed to add Class: $error"))
-        ;
+    }).then((value) => print('Class Added'));
   }
 
   Future<DocumentSnapshot> get getTeacherInfo =>
@@ -56,22 +53,16 @@ class ClassDoc {
   }
 
   deleteClass() {
-    document.delete().then((value) => print("Deleted"))
-        // .catchError((error) => print("Failed to delete: $error"))
-        ;
+    document.delete().then((value) => print('Deleted'));
   }
 
   updateClassName(String name) {
-    document.update({'name': name}).then((value) => print("Updated"))
-        // .catchError((error) => print("Failed to update: $error"))
-        ;
+    document.update({'name': name}).then((value) => print('Updated'));
   }
 
   setClassAnnouc(String annoucement) {
-    document.update({'Annoucement': annoucement}).then(
-            (value) => print("Updated"))
-        // .catchError((error) => print("Failed to update: $error"))
-        ;
+    document
+        .update({'Annoucement': annoucement}).then((value) => print('Updated'));
   }
 
   Stream<QuerySnapshot> getBooks() {
@@ -100,7 +91,7 @@ class ClassDoc {
       'image': imageUrl,
       'pdf': pdfUrl
     });
-    print("file Uploaded");
+    print('file Uploaded');
   }
 
   updateBook(BookRaw book) async {
@@ -130,20 +121,16 @@ class ClassDoc {
       });
     }
 
-    print("file Updated");
+    print('file Updated');
   }
 
   deleteBook(String id) async {
-    final ref = await FirebaseStorage.instance.ref('book').child(id).listAll()
-        // .then((listResults) => {
-        //       listResults.items.map((item) => {item.delete()})
-        //     });
-        ;
+    final ref = await FirebaseStorage.instance.ref('book').child(id).listAll();
     await ref.items[0].delete();
     await ref.items[1].delete();
     await document.collection('book').doc(id).delete();
 
-    print("Book Deleted");
+    print('Book Deleted');
   }
 
   Future<String> uploadBookFile(id, fileName, file) async {
@@ -161,7 +148,7 @@ class ClassDoc {
     final filePath = file.absolute.path;
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
     final splitted = filePath.substring(0, (lastIndex));
-    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+    final outPath = '${splitted}_out${filePath.substring(lastIndex)}';
     var result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       outPath,

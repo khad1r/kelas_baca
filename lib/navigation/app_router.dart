@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/service.dart';
-import 'package:kelas_baca/screens/student_main.dart';
+import '../api/kelas_baca_services.dart';
 
-import '../models/models.dart';
 import '../screens/screens.dart';
 
 class AppRouter extends RouterDelegate
@@ -37,11 +35,11 @@ class AppRouter extends RouterDelegate
         if (!service.isInitialized) SplashScreen.page(),
         if (!service.auth.isLoggedIn() && service.userService == null)
           LoginScreen.page(),
-        if (service.auth.isLoggedIn() && service.getRole == "Parent")
+        if (service.auth.isLoggedIn() && service.getRole == 'Parent')
           ParentMain.page(),
-        if (service.auth.isLoggedIn() && service.getRole == "Teacher")
+        if (service.auth.isLoggedIn() && service.getRole == 'Teacher')
           TeacherMain.page(),
-        if (service.auth.isLoggedIn() && service.getRole == "Student")
+        if (service.auth.isLoggedIn() && service.getRole == 'Student')
           StudentMain.page(),
       ],
     );

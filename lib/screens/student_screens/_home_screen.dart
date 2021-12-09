@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
+import 'package:kelas_baca/api/kelas_baca_services.dart';
 import 'package:kelas_baca/components/components.dart';
 import 'package:kelas_baca/models/models.dart';
-import 'package:kelas_baca/api/mock_student_service.dart';
 import 'package:provider/provider.dart';
 // import 'package:kelas_baca/widget/cards.dart';
 // import 'package:kelas_baca/widget/favorite.dart';
@@ -15,7 +14,6 @@ class StudentHome extends StatefulWidget {
 }
 
 class _StudentHomeState extends State<StudentHome> {
-  final mockService = MockStudentService();
   late StudentService studentService;
   List<Book> assignbooks = [];
   List<Book> favoritebooks = [];

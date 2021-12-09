@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'child_setting.dart';
+import 'parent_screens.dart';
 
 class EmptyClass extends StatelessWidget {
   const EmptyClass({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class EmptyClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("Belum ada Kelas", style: Theme.of(context).textTheme.headline2),
+        Text('Belum ada Kelas', style: Theme.of(context).textTheme.headline2),
         SizedBox(
           height: 30,
         ),

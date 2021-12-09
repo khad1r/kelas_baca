@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'auth_service.dart';
+import './kelas_baca_services.dart';
+import '../models/models.dart';
 
 class Service extends ChangeNotifier {
   AuthService auth = AuthService();
@@ -31,14 +27,14 @@ class Service extends ChangeNotifier {
     if (auth.isLoggedIn()) {
       _role = await auth.getRole;
       var id = await auth.getUser!.uid;
-      if (_role == "Teacher") {
+      if (_role == 'Teacher') {
         userService = TeacherService(teacherID: id);
-      } else if (_role == "Parent") {
+      } else if (_role == 'Parent') {
         final prefs = await SharedPreferences.getInstance();
         if (prefs.containsKey('active_student')) {
           final idstudent = prefs.getString('active_student');
           if (idstudent != null) {
-            _role = "Student";
+            _role = 'Student';
             StudentService studentService =
                 StudentService(studentID: idstudent);
             await studentService.InitService();

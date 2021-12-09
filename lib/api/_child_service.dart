@@ -1,10 +1,4 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kelas_baca/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firebase_services.dart';
 
 class ChildService {
   DocumentReference document;
@@ -39,10 +33,6 @@ class ChildService {
     return 'Proses Berhasil';
   }
 
-  // Stream<DocumentSnapshot> getChild() {
-  //   return document.snapshots();
-  // }
-
   Future<Map<String, dynamic>> getChild() async {
     final childget = await document.get();
     return childget.data() as Map<String, dynamic>;
@@ -55,30 +45,6 @@ class ChildService {
         .collection('book')
         .snapshots();
   }
-
-  // Future<List<Book>> getClassBook() async {
-  //   final books = await FirebaseFirestore.instance
-  //       .collection('classes')
-  //       .doc(classId)
-  //       .collection('book')
-  //       .get();
-  //   List<Book> booksss = [];
-  //   for (var book in books.docs) {
-  //     document.collection('book').doc(book.id).get().then((value) => {
-  //           if (!value.exists)
-  //             {
-  //               booksss.add(Book(
-  //                   id: book.data()['id'],
-  //                   title: book.data()['title'],
-  //                   imageurl: book.data()['image'],
-  //                   pdfurl: book.data()['pdf'],
-  //                   description: book.data()['description']))
-  //             }
-  //         });
-  //   }
-
-  //   return booksss;
-  // }
 
   Future<DocumentSnapshot> getChildBook(String bookId) async {
     return await document.collection('book').doc(bookId).get();
@@ -101,18 +67,6 @@ class ChildService {
   }
 
   delete() {
-    document.delete().then((value) => print("Deleted"))
-        // .catchError((error) => print("Failed to delete: $error"))
-        ;
+    document.delete().then((value) => print('Deleted'));
   }
-
-  // updateName(String name) {
-  //   document.update({'name': name}).then((value) => print("Updated"))
-  //       // .catchError((error) => print("Failed to update: $error"))
-  //       ;
-  // }
-
-  // Stream<QuerySnapshot> getBooks() {
-  //   return document.collection('book').snapshots();
-  // }
 }

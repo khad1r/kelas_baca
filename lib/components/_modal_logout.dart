@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
 import 'package:provider/provider.dart';
+import '../api/kelas_baca_services.dart';
 
 class ModalLogout extends StatefulWidget {
   const ModalLogout({

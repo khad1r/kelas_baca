@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/api/kelas_baca_services.dart';
+import 'package:kelas_baca/api/_service.dart';
 import 'package:provider/provider.dart';
 import './book_item_screen.dart';
 import '../../models/models.dart';
-import '../../api/mock_student_service.dart';
 import '../../components/components.dart';
 import './_class_setting.dart';
 import 'announce_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 class ClassScreen extends StatefulWidget {
   const ClassScreen({Key? key}) : super(key: key);
 
@@ -20,27 +17,9 @@ class ClassScreen extends StatefulWidget {
 }
 
 class _ClassScreenState extends State<ClassScreen> {
-  final mockService = MockStudentService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var classService;
   late TextEditingController searchTextController;
-  // List<mockStudent> students = [
-  //   mockStudent(name: "Putra Siyang"),
-  //   mockStudent(name: "Putri Tidur"),
-  //   mockStudent(name: "Ananda Sore"),
-  //   mockStudent(name: "Putra Siyang"),
-  //   mockStudent(name: "Putri Tidur"),
-  //   mockStudent(name: "Ananda Sore"),
-  //   mockStudent(name: "Putra Siyang"),
-  //   mockStudent(name: "Putri Tidur"),
-  //   mockStudent(name: "Ananda Sore"),
-  //   mockStudent(name: "Putra Siyang"),
-  //   mockStudent(name: "Putri Tidur"),
-  //   mockStudent(name: "Ananda Sore"),
-  //   mockStudent(name: "Putra Siyang"),
-  //   mockStudent(name: "Putri Tidur"),
-  //   mockStudent(name: "Abdul Kadir Jaelani"),
-  // ];
 
   @override
   void initState() {

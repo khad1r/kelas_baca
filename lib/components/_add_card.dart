@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/models/models.dart';
 
 class AddCard extends StatelessWidget {
   final double aspectRatio;

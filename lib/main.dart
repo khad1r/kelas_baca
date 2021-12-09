@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/auth_service.dart';
-import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/api/_auth_service.dart';
+import 'package:kelas_baca/api/_service.dart';
 import 'package:kelas_baca/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';

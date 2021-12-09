@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/api/service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firebase_services.dart';
 
 class AuthService extends ChangeNotifier {
   static String userId() {
@@ -45,15 +41,15 @@ class AuthService extends ChangeNotifier {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       notifyListeners();
-      return "Login berhasil";
+      return 'Login berhasil';
     } on FirebaseAuthException catch (e) {
-      if (e.code == "wrong-password" ||
-          e.code == "user-not-found" ||
-          e.code == "invalid-email") {
-        throw ("Email atau Password salah!!");
+      if (e.code == 'wrong-password' ||
+          e.code == 'user-not-found' ||
+          e.code == 'invalid-email') {
+        throw ('Email atau Password salah!!');
       }
-      if (e.code == "too-many-requests") {
-        throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      if (e.code == 'too-many-requests') {
+        throw ('Terlalu banyak request, coba lagi beberapa saat..');
       }
     }
   }
@@ -71,13 +67,13 @@ class AuthService extends ChangeNotifier {
           .doc(credentials.user!.uid)
           .set({'name': name, 'role': role});
       notifyListeners();
-      return "Sign Up berhasil";
+      return 'Sign Up berhasil';
     } on FirebaseAuthException catch (e) {
-      if (e.code == "too-many-requests") {
-        throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      if (e.code == 'too-many-requests') {
+        throw ('Terlalu banyak request, coba lagi beberapa saat..');
       }
-      if (e.code == "email-already-in-use") {
-        throw ("Email telah digunakan!!");
+      if (e.code == 'email-already-in-use') {
+        throw ('Email telah digunakan!!');
       } else
         throw (e.message.toString());
     }
@@ -96,14 +92,14 @@ class AuthService extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove('active_student');
       notifyListeners();
-      return "berhasil";
+      return 'berhasil';
     } on FirebaseAuthException catch (e) {
-      if (e.code == "wrong-password" ||
-          e.code == "user-not-found" ||
-          e.code == "invalid-email") {
-        throw ("Password salah!!");
-      } else if (e.code == "too-many-requests") {
-        throw ("Terlalu banyak request, coba lagi beberapa saat..");
+      if (e.code == 'wrong-password' ||
+          e.code == 'user-not-found' ||
+          e.code == 'invalid-email') {
+        throw ('Password salah!!');
+      } else if (e.code == 'too-many-requests') {
+        throw ('Terlalu banyak request, coba lagi beberapa saat..');
       } else {
         throw (e.toString());
       }
@@ -115,7 +111,7 @@ class AuthService extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('active_student', id);
       notifyListeners();
-      return "berhasil";
+      return 'berhasil';
     } on Exception catch (e) {
       throw (e.toString());
     }

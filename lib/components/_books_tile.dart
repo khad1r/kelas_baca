@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kelas_baca/models/models.dart';
+import '../models/models.dart';
 
-import 'card_book.dart';
+import '_card_book.dart';
 
 class BookTile extends StatelessWidget {
-  Book book;
+  final Book book;
   BookTile({
     Key? key,
     required this.book,

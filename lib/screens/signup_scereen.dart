@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelas_baca/api/firebase_services.dart';
-import 'package:kelas_baca/api/service.dart';
+import 'package:kelas_baca/api/kelas_baca_services.dart';
+import 'package:kelas_baca/api/_service.dart';
 import 'package:provider/provider.dart';
 import './teacher_main.dart';
 

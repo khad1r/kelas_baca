@@ -5,7 +5,7 @@ import 'package:kelas_baca/screens/splash_screen.dart';
 import 'package:kelas_baca/theme.dart';
 import 'package:provider/src/provider.dart';
 
-import 'api/service.dart';
+import 'api/_service.dart';
 import 'navigation/app_router.dart';
 import 'screens/Parent_main.dart';
 import 'screens/teacher_main.dart';
