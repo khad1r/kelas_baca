@@ -6,3 +6,4 @@ export '_child_screen_home.dart';
 export '_child_setting.dart';
 export '_home.dart';
 export '_parent_chat.dart';
+export '_read_book.dart';

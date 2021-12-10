@@ -32,13 +32,7 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   Future refresh() async {
-    final abook = await studentService.getBooks();
-    final fbook = await studentService.getFavoriteBooks();
-
-    setState(() {
-      assignbooks = abook;
-      favoritebooks = fbook;
-    });
+    setState(() {});
   }
 
   @override
@@ -57,7 +51,20 @@ class _StudentHomeState extends State<StudentHome> {
                   style: Theme.of(context).textTheme.headline2),
             ),
           ),
-          AssignBooksListView(assignbooks: assignbooks),
+          FutureBuilder(
+            future: studentService.getBooks(),
+            builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return AssignBooksListView(assignbooks: snapshot.data ?? []);
+              } else {
+                // 10
+                return SizedBox(
+                  height: 500,
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(
                 left: 12.0, right: 12.0, top: 2.0, bottom: 20.0),
@@ -66,7 +73,21 @@ class _StudentHomeState extends State<StudentHome> {
                   style: Theme.of(context).textTheme.headline2),
             ),
           ),
-          FavoriteBooksListview(favoritebooks: favoritebooks),
+          FutureBuilder(
+            future: studentService.getFavoriteBooks(),
+            builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return FavoriteBooksListview(
+                    favoritebooks: snapshot.data ?? []);
+              } else {
+                // 10
+                return SizedBox(
+                  height: 200,
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
+            },
+          ),
         ],
       ),
     );

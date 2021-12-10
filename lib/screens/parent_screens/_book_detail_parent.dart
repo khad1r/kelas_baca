@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelas_baca/screens/parent_screens/parent_screens.dart';
 import 'package:provider/provider.dart';
 import '../../api/kelas_baca_services.dart';
 import '../../models/models.dart';
@@ -114,11 +115,17 @@ class _BookDetailState extends State<BookDetail> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    var snackBar = SnackBar(
-                                        content:
-                                            Text('Read ${widget.book.title}'));
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ReadBook(book: widget.book)),
+                                    );
+                                    // var snackBar = SnackBar(
+                                    //     content:
+                                    //         Text('Read ${widget.book.title}'));
+                                    // ScaffoldMessenger.of(context)
+                                    //     .showSnackBar(snackBar);
                                   },
                                   child: Text('Baca',
                                       style: Theme.of(context)
