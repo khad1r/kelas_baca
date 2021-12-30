@@ -36,7 +36,7 @@ class ParentService {
       FirebaseFirestore.instance.collection('user').doc(parentID).get();
 
   setChild(String documentId) {
-    childDoc = ChildService(id: documentId);
+    childDoc = new ChildService(id: documentId);
     childDoc!.init();
   }
 }

@@ -17,6 +17,7 @@ class ChildService {
         .doc(id)
         .get()
         .then((value) => value.data()!['class'] as String);
+    if (classId == '') return classId;
     final classes = await FirebaseFirestore.instance
         .collection('classes')
         .doc(classId)

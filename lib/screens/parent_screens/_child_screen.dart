@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 import '../../api/kelas_baca_services.dart';
 import 'parent_screens.dart';
 
+// ignore: must_be_immutable
 class ChildScreen extends StatelessWidget {
   ChildScreen({Key? key}) : super(key: key);
-  late final ChildService childService;
+  late ChildService childService;
 
   @override
   Widget build(BuildContext context) {
